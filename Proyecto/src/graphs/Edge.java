@@ -3,15 +3,25 @@ package graphs;
 public class Edge<T,K extends Comparable<K>> {
 
 	private Node<T,K> source;
-	private Node<T,K> end;
+	private Node<T,K> end;	                     
 	private String name;
+	private boolean isDirected;
 	
 //	private E weight;
 	
-	public Edge(String name, Node<T,K> source, Node<T,K> end) {
+	public Edge(String name, Node<T,K> source, Node<T,K> end, boolean isDirected) {
+		this.isDirected = isDirected;
 		this.source = source;
 		this.name = name;
 		this.end = end;
+	}
+
+	public boolean isDirected() {
+		return isDirected;
+	}
+
+	public void setDirected(boolean isDirected) {
+		this.isDirected = isDirected;
 	}
 
 	public Node<T, K> getSource() {
