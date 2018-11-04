@@ -11,13 +11,15 @@ public class Node<T, K extends Comparable<K>>{
 	private K key;
 	private String color;
 	private int distance;
-	private HashMap<String, Node<T,K>> adjacencys;  
+	private HashMap<K, Node<T,K>> vertexAdjacencys;  
+	private HashMap<String, Edge<T,K>> edgesAdjacencys;
 	
 	public Node(T value, K key, String color) {
 		this.value = value;
 		this.key = key;
 		this.color = color;
-		adjacencys = new HashMap<String, Node<T,K>>();
+		vertexAdjacencys = new HashMap<K, Node<T,K>>();
+		edgesAdjacencys = new HashMap<String, Edge<T,K>>();
 	}
 
 	public T getValue() {
@@ -36,12 +38,12 @@ public class Node<T, K extends Comparable<K>>{
 		this.key = key;
 	}
 
-	public HashMap<String, Node<T,K>> getAdjacencys() {
-		return adjacencys;
+	public HashMap<K, Node<T,K>> getAdjacencys() {
+		return vertexAdjacencys;
 	}
 
-	public void setAdjacencys(HashMap<String, Node<T,K>> adjacencys) {
-		this.adjacencys = adjacencys;
+	public void setAdjacencys(HashMap<K, Node<T,K>> adjacencys) {
+		this.vertexAdjacencys = adjacencys;
 	}
 
 	public String getColor() {
@@ -60,7 +62,23 @@ public class Node<T, K extends Comparable<K>>{
 		this.distance = distance;
 	}
 	
-	
+	public void createEdge(boolean isDirected, Node<T,K> nodeVecino, String name) {
+		
+		if(isDirected) {
+			Edge<T,K> edge = new Edge<T,K>(name, this, nodeVecino, true);
+			this.edgesAdjacencys.put(edge.getName(), edge);
+			this.vertexAdjacencys.put(edge.getEnd().getKey(), edge.getEnd());
+		}
+		else {
+			Edge<T,K> edge = new Edge<T,K>(name, this, nodeVecino, true);
+			this.edgesAdjacencys.put(edge.getName(), edge);
+			this.vertexAdjacencys.put(edge.getEnd().getKey(), edge.getEnd());
+			edge.setEnd(this);
+			edge.setSource(nodeVecino);
+			edge.getSource().edgesAdjacencys.put(edge.getName(), edge);
+			edge.getSource().vertexAdjacencys.put(this.key, this);	
+		}
+	}
 	
 
 	
