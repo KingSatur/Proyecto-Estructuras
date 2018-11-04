@@ -62,6 +62,7 @@ public class Node<T, K extends Comparable<K>>{
 		this.distance = distance;
 	}
 	
+	
 	public void createEdge(boolean isDirected, Node<T,K> nodeVecino, String name) {
 		
 		if(isDirected) {
