@@ -2,18 +2,31 @@ package graphs;
 
 public class Edge<T,K extends Comparable<K>> {
 
-	private Node<T,K> source;
-	private Node<T,K> end;	                     
+	private Node<T,K> Node1;
+	private Node<T,K> Node2;	                     
 	private String name;
 	private boolean isDirected;
 	
 //	private E weight;
 	
-	public Edge(String name, Node<T,K> source, Node<T,K> end, boolean isDirected) {
-		this.isDirected = isDirected;
-		this.source = source;
+	public Edge(String name, Node<T,K> node1, Node<T,K> node2, boolean isDirected) {
 		this.name = name;
-		this.end = end;
+		this.Node1 = node1;
+		this.Node2 = node2;
+		this.isDirected = isDirected;
+		createEdge();
+	}
+	
+	public void createEdge() {
+		if(isDirected) { 
+			Node1.getEdgesAdjacencys().put(this.name, this);			
+			Node1.getAdjacencys().put(Node2.getKey(), Node2);
+		}else {
+			Node1.getEdgesAdjacencys().put(this.name, this);	
+			Node1.getAdjacencys().put(Node2.getKey(), Node2);
+			Node2.getEdgesAdjacencys().put(this.name, this);
+			Node2.getAdjacencys().put(Node1.getKey(), Node1);
+		}
 	}
 
 	public boolean isDirected() {
@@ -24,20 +37,20 @@ public class Edge<T,K extends Comparable<K>> {
 		this.isDirected = isDirected;
 	}
 
-	public Node<T, K> getSource() {
-		return source;
+	public Node<T, K> getNode1() {
+		return Node1;
 	}
 
-	public void setSource(Node<T, K> source) {
-		this.source = source;
+	public void setNode1(Node<T, K> source) {
+		this.Node1 = source;
 	}
 
-	public Node<T, K> getEnd() {
-		return end;
+	public Node<T, K> getNode2() {
+		return Node2;
 	}
 
-	public void setEnd(Node<T, K> end) {
-		this.end = end;
+	public void setNode2(Node<T, K> end) {
+		this.Node2 = end;
 	}
 
 	public String getName() {
