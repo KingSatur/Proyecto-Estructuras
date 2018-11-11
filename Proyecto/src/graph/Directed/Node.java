@@ -42,6 +42,17 @@ public class Node<V, K extends Comparable<K>> implements Comparable<Node> {
 	public void setNeighbors(PriorityQueue<Node<V, K>> neighbors) {
 		this.neighbors = neighbors;
 	}
+	
+	
+
+	
+	public HashMap<K, Edge> getEdges() {
+		return edges;
+	}
+
+	public void setEdges(HashMap<K, Edge> edges) {
+		this.edges = edges;
+	}
 
 	
 	public <W extends Comparable<W>> void addEdge(Node end, K keyEdge, W weight) {

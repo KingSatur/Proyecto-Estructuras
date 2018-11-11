@@ -37,9 +37,4 @@ public class Edge<W extends Comparable<W>,K extends Comparable<K>> {
 	}
 	
 	
-	
-	
-	
-	
-	
 }

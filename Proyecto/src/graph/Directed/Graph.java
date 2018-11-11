@@ -68,6 +68,10 @@ public class Graph<V, K extends Comparable<K>> {
 	
 	public ArrayList<Node> dfs(Node s){
 		
+		for (K key : visited.keySet()) {
+			visited.put(key, false);
+		}
+		
 		ArrayList nodesVisited = new ArrayList<>();
 		visited.put((K) s.getKey(), true);
 //		nodesVisited.add(s);
@@ -186,6 +190,8 @@ public class Graph<V, K extends Comparable<K>> {
 		
 		
 	}
+
+	
 	
 
 }
