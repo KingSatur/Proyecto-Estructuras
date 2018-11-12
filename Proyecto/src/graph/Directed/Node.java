@@ -55,19 +55,17 @@ public class Node<V, K extends Comparable<K>> implements Comparable<Node> {
 	}
 
 	
-	public <W extends Comparable<W>> void addEdge(Node end, K keyEdge, W weight) {
-		
-		Edge e = new Edge(end, weight, keyEdge);
-		edges.put(keyEdge, new Edge<>(end, weight, keyEdge));
+	public void addEdge(Node<V,K> end, K keyEdge, double weight) {
+		Edge<K> e = new Edge<K>(end,keyEdge, weight);
+		edges.put(e.getKey(), e);
 		neighbors.add(end);
-		
 	}
 	
 	public void removeEdge(K keyEdge) {
 		
-		Node end = edges.get(keyEdge).getEnd();
+		Node<V,K> end = edges.get(keyEdge).getEnd();
 		edges.remove(keyEdge);
-		Iterator i = neighbors.iterator();
+		Iterator<Node<V, K>> i = neighbors.iterator();
 		while(i.hasNext()) {
 			if(i.next().equals(end)) {
 				i.remove();
