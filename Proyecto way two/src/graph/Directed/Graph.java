@@ -55,6 +55,20 @@ public class Graph<V, K extends Comparable<K>> {
 					}
 				}
 			}
+			else {
+				adjacencyMatrix = new int[nodes.size()][nodes.size()];
+				for(int i = 0; i < adjacencyMatrix.length ; i ++) {
+					for(int j = 0; j < adjacencyMatrix.length ; j ++) {
+						if(nodes.get(keys.get(i)).getNeighbors().contains(nodes.get(keys.get(j)))) {
+							adjacencyMatrix[i][j] = 1;
+						}
+						else {
+							adjacencyMatrix[i][j] = 0;
+						}
+					}
+				}
+			}
+			
 		}
 		else {
 			adjacencyMatrix = new int[nodes.size()][nodes.size()];
