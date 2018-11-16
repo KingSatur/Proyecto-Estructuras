@@ -14,17 +14,22 @@ public class Graph<V, K extends Comparable<K>> {
 	private static final double BIG_CONSTANT = Double.POSITIVE_INFINITY;
 	private HashMap<K, Node<V,K>> nodes;
 	private int[][] adjacencyMatrix;
+	public double[][] distanceMatrix;
 	private HashMap parent;
 	private HashMap<K, Boolean> visited; 
 	private HashMap<K, Double> distances;
+	private ArrayList<Node<V,K>> route;
 	private ArrayList<K> keys;
+	private double routSume;
 	
 	public Graph() {
 		super();
+		routSume = 0;
 		nodes = new HashMap<>();
 		visited = new HashMap<>();
 		distances = new HashMap<K, Double>();
 		keys = new ArrayList<K>();
+		route = new ArrayList<Node<V,K>>();
 	}
 	
 	public ArrayList<K> getKeys() {
@@ -236,7 +241,89 @@ public class Graph<V, K extends Comparable<K>> {
 		}
 	}
 	
+	public void floydWarshall() {
+		
+		initializateDistanceMatrix();
+		
+		for(int k = 0; k < distanceMatrix.length ; k ++) {
+			for(int i = 0; i < distanceMatrix.length; i ++) {
+				for(int j = 0; j < distanceMatrix[0].length ; j ++) {
+					distanceMatrix[i][j] = Math.min(distanceMatrix[i][j] ,distanceMatrix[i][k] + distanceMatrix[k][j]);
+				}
+			}
+		}
+			
+	}
 	
+	public void kruskal() {
+		
+	}
+	
+	
+	public void prim(Node<V,K> source) {
+
+		routSume = 0;
+		Comparator<Edge> m = new EdgeCompare();
+		PriorityQueue<Edge<K>> edgesQueue = new PriorityQueue<Edge<K>>(m);
+		visited.put(source.getKey(), true);
+		fillQueue(edgesQueue, source);
+		route.add(source);
+		
+		
+		while(route.size() != nodes.size()) {
+			Node<V,K> node = edgesQueue.peek().getEnd();
+			if(visited.get(node.getKey())) {
+				edgesQueue.poll();
+			}
+			else {
+				visited.put(node.getKey(), true);
+				routSume += edgesQueue.peek().getWeightKey();
+				route.add(node);
+				edgesQueue.poll();
+				fillQueue(edgesQueue, node);
+			}
+	
+		}
+		
+	}
+	
+	public void fillQueue(PriorityQueue<Edge<K>> queue, Node<V,K> node) {
+		
+		for(Edge e : node.getEdges().values()) {
+			queue.add(e);
+		}
+		
+	}
+	
+	
+	
+	public void initializateDistanceMatrix() {
+		
+		distanceMatrix = new double[nodes.size()][nodes.size()];
+		
+		for(int i = 0; i < distanceMatrix.length ; i ++) {
+			for(int j  = 0; j < distanceMatrix[0].length; j ++) {
+				Node<V,K> nodeIn = nodes.get(keys.get(i));
+				ArrayList<Node<V,K>> nodesFinalEdges = nodeIn.nodesFinalEdges();
+				if(nodesFinalEdges.contains(nodes.get(keys.get(j)))) {
+					distanceMatrix[i][j] = nodeIn.getWeightEdge(nodes.get(keys.get(j)));
+				}
+				else {
+					distanceMatrix[i][j] = BIG_CONSTANT;
+				}
+			}
+		}		
+	}
+	
+	
+	public double[][] getDistanceMatrix() {
+		return distanceMatrix;
+	}
+
+	public void setDistanceMatrix(double[][] distanceMatrix) {
+		this.distanceMatrix = distanceMatrix;
+	}
+
 	public static void main(String[] args) {
 		Graph<String, Integer> g = new Graph<>();
 		Node<String, Integer> a = new Node<>("A", 10);
@@ -268,18 +355,29 @@ public class Graph<V, K extends Comparable<K>> {
 				
 		g.djikstra(e);
 		g.updateMatrix();
+		g.floydWarshall();
+		g.prim(b);
+//		
+//		for(int i = 0; i < g.getAdjacencyMatrix().length ; i ++) {
+//			System.out.println("\n");
+//			System.out.print(g.getNodes().get(g.getKeys().get(i)).getValue() + "      ");
+//			for(int j = 0; j < g.getAdjacencyMatrix()[0].length ; j ++) {
+//				System.out.print(g.getAdjacencyMatrix()[i][j] + "," + g.getNodes().get(g.getKeys().get(j)).getValue() + "   ");
+//			}
+//		}
 		
-		for(int i = 0; i < g.getAdjacencyMatrix().length ; i ++) {
-			System.out.println("\n");
-			System.out.print(g.getNodes().get(g.getKeys().get(i)).getValue() + "      ");
-			for(int j = 0; j < g.getAdjacencyMatrix()[0].length ; j ++) {
-				System.out.print(g.getAdjacencyMatrix()[i][j] + "," + g.getNodes().get(g.getKeys().get(j)).getValue() + "   ");
-			}
-		}
-	
 		
 		
 		
+		
+//		for(int i = 0; i < g.getDistanceMatrix().length ; i ++) {
+//			System.out.println("\n");
+//			System.out.print(g.getNodes().get(g.getKeys().get(i)).getValue() + "      ");
+//			for(int j = 0; j < g.getDistanceMatrix()[0].length ; j ++) {
+//				System.out.print(g.getDistanceMatrix()[i][j] + "," + g.getNodes().get(g.getKeys().get(j)).getValue() + "   ");
+//			}
+//		}
+			
 		
 //		for(int i = 0; i < g.bfs(n3).size() ; i ++) {
 //			System.out.println("Valor " + g.bfs(n3).get(i).getValue() + " LLave " + g.bfs(n3).get(i).getKey());

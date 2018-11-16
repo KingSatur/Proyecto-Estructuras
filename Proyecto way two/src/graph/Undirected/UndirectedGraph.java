@@ -10,7 +10,6 @@ public class UndirectedGraph<V, K extends Comparable<K>> extends Graph<V,K> {
 
 	public UndirectedGraph() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override

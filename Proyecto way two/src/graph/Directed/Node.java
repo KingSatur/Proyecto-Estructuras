@@ -1,5 +1,6 @@
 package graph.Directed;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.PriorityQueue;
@@ -73,6 +74,32 @@ public class Node<V, K extends Comparable<K>> implements Comparable<Node> {
 		}
 	
 	}
+
+	public ArrayList<Node<V,K>> nodesFinalEdges(){
+		
+		ArrayList<Node<V,K>> nodesFinalEdges = new ArrayList<Node<V,K>>();
+	
+		for(Edge edge: edges.values()) {
+			nodesFinalEdges.add(edge.getEnd());
+		}
+
+		return nodesFinalEdges;
+	}
+	
+	public double getWeightEdge(Node<V,K> m) {
+		
+		double weight = 0;
+		
+		for(Edge e: edges.values()) {
+			if(e.getEnd().equals(m)) {
+				weight = e.getWeightKey();
+			}
+		}
+		
+		return weight;
+		
+	}
+	
 
 	@Override
 	public int compareTo(Node o) {
