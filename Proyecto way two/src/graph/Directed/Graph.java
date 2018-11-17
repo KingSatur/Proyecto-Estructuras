@@ -16,7 +16,6 @@ public class Graph<V, K extends Comparable<K>> {
 	private static final double BIG_CONSTANT = Double.POSITIVE_INFINITY;
 	private HashMap<K, Node<V,K>> nodes;
 	private int[][] adjacencyMatrix;
-	public double[][] distanceMatrix;
 	private HashMap parent;
 	private HashMap<K, Boolean> visited; 
 	private HashMap<K, Double> distances;
@@ -95,6 +94,7 @@ public class Graph<V, K extends Comparable<K>> {
 	public HashMap<K, Node<V, K>> getNodes() {
 		return nodes;
 	}
+	
 	public void setNodes(HashMap<K, Node<V, K>> nodes) {
 		this.nodes = nodes;
 	}
@@ -243,9 +243,9 @@ public class Graph<V, K extends Comparable<K>> {
 		}
 	}
 	
-	public void floydWarshall() {
+	public double[][] floydWarshall() {
 		
-		initializateDistanceMatrix();
+		double[][] distanceMatrix = initializateDistanceMatrix();
 		
 		for(int k = 0; k < distanceMatrix.length ; k ++) {
 			for(int i = 0; i < distanceMatrix.length; i ++) {
@@ -255,12 +255,26 @@ public class Graph<V, K extends Comparable<K>> {
 			}
 		}
 			
+		return distanceMatrix;
 	}
 	
 	public void kruskal() {
 		
-	}
+		Comparator<Edge> m = new EdgeCompare();
+		PriorityQueue<Edge> edgesQueue = new PriorityQueue<Edge>(m);
+		
+		//OBTENGO LAS ARISTAS DE TODO EL GRAFO Y LAS ORDENO
+		for(Node<V,K> node: nodes.values()) {
+			for(Edge e : node.getEdges().values()) {
+				edgesQueue.add(e);
+			}
+		}
 	
+		
+		
+		
+		
+	}
 	
 	public void prim(Node<V,K> source) {
 
@@ -295,11 +309,9 @@ public class Graph<V, K extends Comparable<K>> {
 		
 	}
 	
-	
-	
-	public void initializateDistanceMatrix() {
+	public double[][] initializateDistanceMatrix() {
 		
-		distanceMatrix = new double[nodes.size()][nodes.size()];
+		double[][] distanceMatrix = new double[nodes.size()][nodes.size()];
 		
 		for(int i = 0; i < distanceMatrix.length ; i ++) {
 			for(int j  = 0; j < distanceMatrix[0].length; j ++) {
@@ -312,18 +324,11 @@ public class Graph<V, K extends Comparable<K>> {
 					distanceMatrix[i][j] = BIG_CONSTANT;
 				}
 			}
-		}		
-	}
-	
-	
-	public double[][] getDistanceMatrix() {
+		}	
+		
 		return distanceMatrix;
 	}
-
-	public void setDistanceMatrix(double[][] distanceMatrix) {
-		this.distanceMatrix = distanceMatrix;
-	}
-
+	
 	public static void main(String[] args) {
 //		Graph<String, Integer> g = new Graph<>();
 //		Node<String, Integer> a = new Node<>("A", 10);
