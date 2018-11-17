@@ -9,6 +9,8 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
 
+import graph.Undirected.UndirectedGraph;
+
 public class Graph<V, K extends Comparable<K>> {
 	
 	private static final double BIG_CONSTANT = Double.POSITIVE_INFINITY;
@@ -282,12 +284,12 @@ public class Graph<V, K extends Comparable<K>> {
 				edgesQueue.poll();
 				fillQueue(edgesQueue, node);
 			}
-	
 		}
-		
 	}
 	
 	public void fillQueue(PriorityQueue<Edge<K>> queue, Node<V,K> node) {
+		
+		queue.clear();
 		
 		for(Edge e : node.getEdges().values()) {
 			queue.add(e);
@@ -325,38 +327,105 @@ public class Graph<V, K extends Comparable<K>> {
 	}
 
 	public static void main(String[] args) {
-		Graph<String, Integer> g = new Graph<>();
-		Node<String, Integer> a = new Node<>("A", 10);
-		Node<String, Integer> b = new Node<>("B", 30);
-		Node<String, Integer> c = new Node<>("C", 23);
-		Node<String, Integer> e = new Node<>("E", 5);
-		Node<String, Integer> f = new Node<>("F", 8);
-		Node<String, Integer> x = new Node<>("X", 34);
-		Node<String, Integer> w = new Node<>("W", 13);
-		Node<String, Integer> h = new Node<>("H", 87);
-		g.addNode(a);
-		g.addNode(b);
-		g.addNode(c);
-		g.addNode(e);
-		g.addNode(f);
-		g.addNode(x);
-		g.addNode(w);
-		g.addNode(h);
-		g.addEdge(a.getKey(), b.getKey(), 1, 70);
-		g.addEdge(a.getKey(), c.getKey(), 2, 9);
-		g.addEdge(b.getKey(), e.getKey(), 0, 1);
-		g.addEdge(b.getKey(), c.getKey(), 3, 10);
-		g.addEdge(c.getKey(), f.getKey(), 4, 4);
-		g.addEdge(e.getKey(), f.getKey(), 5, 60);
-		g.addEdge(e.getKey(), x.getKey(), 6, 23);
-		g.addEdge(f.getKey(), w.getKey(), 7, 90);
-		g.addEdge(w.getKey(), x.getKey(), 8, 87);
-		g.addEdge(h.getKey(), e.getKey(), 17, 21);
+//		Graph<String, Integer> g = new Graph<>();
+//		Node<String, Integer> a = new Node<>("A", 10);
+//		Node<String, Integer> b = new Node<>("B", 30);
+//		Node<String, Integer> c = new Node<>("C", 23);
+//		Node<String, Integer> e = new Node<>("E", 5);
+//		Node<String, Integer> f = new Node<>("F", 8);
+//		Node<String, Integer> x = new Node<>("X", 34);
+//		Node<String, Integer> w = new Node<>("W", 13);
+//		Node<String, Integer> h = new Node<>("H", 87);
+//		g.addNode(a);
+//		g.addNode(b);
+//		g.addNode(c);
+//		g.addNode(e);
+//		g.addNode(f);
+//		g.addNode(x);
+//		g.addNode(w);
+//		g.addNode(h);
+//		g.addEdge(a.getKey(), b.getKey(), 1, 70);
+//		g.addEdge(a.getKey(), c.getKey(), 2, 9);
+//		g.addEdge(b.getKey(), e.getKey(), 0, 1);
+//		g.addEdge(b.getKey(), c.getKey(), 3, 10);
+//		g.addEdge(c.getKey(), f.getKey(), 4, 4);
+//		g.addEdge(e.getKey(), f.getKey(), 5, 60);
+//		g.addEdge(e.getKey(), x.getKey(), 6, 23);
+//		g.addEdge(f.getKey(), w.getKey(), 7, 90);
+//		g.addEdge(w.getKey(), x.getKey(), 8, 87);
+//		g.addEdge(h.getKey(), e.getKey(), 17, 21);
+		
+		
+//		UndirectedGraph<String, Integer> graph = new UndirectedGraph<String, Integer>();
+//		Node<String, Integer> n1 = new Node<String, Integer>("X", 8);
+//		Node<String, Integer> n2 = new Node<String, Integer>("B", 1);
+//		Node<String, Integer> n3 = new Node<String, Integer>("A", 4);
+//		Node<String, Integer> n4 = new Node<String, Integer>("D", 5);
+//		Node<String, Integer> n5 = new Node<String, Integer>("C", 6);
+//		Node<String, Integer> n6 = new Node<String, Integer>("E", 7);
+//		graph.addNode(n1);
+//		graph.addNode(n2);
+//		graph.addNode(n3);
+//		graph.addNode(n4);
+//		graph.addNode(n5);
+//		graph.addNode(n6);
+//		graph.addEdge(8, 4, 3, 3);
+//		graph.addEdge(1, 4, 5, 7);
+//		graph.addEdge(8, 1, 21, 100);
+//		graph.addEdge(4, 5, 13, 25);
+//		graph.addEdge(1, 5, 21, 4);
+//		graph.addEdge(4, 7, 231, 75);
+//		graph.addEdge(5, 6, 12, 200);
+//		graph.addEdge(6, 7, 6, 57);
+//		graph.addEdge(5, 7, 132, 300);
+//		graph.prim(n3);
+		
+		UndirectedGraph<String, Integer> graph = new UndirectedGraph<String, Integer>();
+		Node<String, Integer> A = new Node<String, Integer>("A", 1);
+		Node<String, Integer> B = new Node<String, Integer>("B", 2);
+		Node<String, Integer> C = new Node<String, Integer>("C", 3);
+		Node<String, Integer> D = new Node<String, Integer>("D", 4);
+		Node<String, Integer> E = new Node<String, Integer>("E", 5);
+		Node<String, Integer> F = new Node<String, Integer>("F", 6);
+		Node<String, Integer> G = new Node<String, Integer>("G", 7);
+		Node<String, Integer> H = new Node<String, Integer>("H", 8);
+		Node<String, Integer> I = new Node<String, Integer>("I", 9);
+		Node<String, Integer> J = new Node<String, Integer>("J", 10);
+		graph.addNode(A);
+		graph.addNode(B);
+		graph.addNode(C);
+		graph.addNode(D);
+		graph.addNode(E);
+		graph.addNode(F);
+		graph.addNode(G);
+		graph.addNode(H);
+		graph.addNode(I);
+		graph.addNode(J);
+		graph.addEdge(1 , 2, 2, 8);
+		graph.addEdge(2 , 5, 4, 4);
+		graph.addEdge(2 , 3, 5, 10);
+		graph.addEdge(3 , 4, 6, 5);
+		graph.addEdge(4 , 5, 7, 7);
+		graph.addEdge(4 , 7, 10, 11);
+		graph.addEdge(5 , 6, 88, 2);
+		graph.addEdge(6 , 7, 65, 12);
+		graph.addEdge(6 , 10, 23, 9);
+		graph.addEdge(6 , 9, 21, 6);
+		graph.addEdge(6 , 8, 124, 14);
+		graph.addEdge(7 , 8, 214, 20);
+		graph.addEdge(9 , 8, 124, 17);
+		graph.addEdge(10 , 9, 19, 3);
+		graph.prim(A);
+		
+		
+		
+		
+		
 				
-		g.djikstra(e);
-		g.updateMatrix();
-		g.floydWarshall();
-		g.prim(b);
+//		g.djikstra(e);
+//		g.updateMatrix();
+//		g.floydWarshall();
+//		g.prim(b);
 //		
 //		for(int i = 0; i < g.getAdjacencyMatrix().length ; i ++) {
 //			System.out.println("\n");
@@ -392,3 +461,17 @@ public class Graph<V, K extends Comparable<K>> {
 	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

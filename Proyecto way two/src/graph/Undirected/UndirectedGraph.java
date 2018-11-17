@@ -17,8 +17,7 @@ public class UndirectedGraph<V, K extends Comparable<K>> extends Graph<V,K> {
 		Node<V, K> nodeEnd = getNodes().get(keyNodeEnd);
 		Node<V, K> nodeStart = getNodes().get(keyNodeStart);
 		getNodes().get(keyNodeStart).addEdge(nodeEnd, keyEdge, weight);
-		getNodes().get(keyNodeEnd).addEdge(nodeStart, keyEdge, weight);
-		
+		getNodes().get(keyNodeEnd).addEdge(nodeStart, keyEdge, weight);	
 	}
 	
 	@Override
@@ -26,7 +25,6 @@ public class UndirectedGraph<V, K extends Comparable<K>> extends Graph<V,K> {
 		K key = (K) getNodes().get(keyNode).getEdges().get(keyEdge).getEnd().getKey();
 		getNodes().get(keyNode).removeEdge(keyEdge);
 		getNodes().get(key).removeEdge(keyEdge);
-		
 	}
 	
 	
