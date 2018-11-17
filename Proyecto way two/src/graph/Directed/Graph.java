@@ -289,8 +289,6 @@ public class Graph<V, K extends Comparable<K>> {
 	
 	public void fillQueue(PriorityQueue<Edge<K>> queue, Node<V,K> node) {
 		
-		queue.clear();
-		
 		for(Edge e : node.getEdges().values()) {
 			queue.add(e);
 		}
