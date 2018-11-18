@@ -44,8 +44,6 @@ public class Node<V, K extends Comparable<K>> implements Comparable<Node> {
 	}
 	
 	
-
-	
 	public HashMap<K, Edge> getEdges() {
 		return edges;
 	}
