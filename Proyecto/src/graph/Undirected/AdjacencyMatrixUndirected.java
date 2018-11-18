@@ -18,8 +18,7 @@ public class AdjacencyMatrixUndirected<V,K extends Comparable<K>> extends Adjace
 
 	@Override
 	public void removeEdge() {
-		// TODO Auto-generated method stub
-		
+	
 	}
 
 	@Override

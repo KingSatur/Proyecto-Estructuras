@@ -58,14 +58,17 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 		
 	}
 
+	
 	@Override
-	public void addNode(Node<V,K> newNode) {
+	public void removeNode() {
 		// TODO Auto-generated method stub
 		
 	}
 
+
+
 	@Override
-	public void removeNode() {
+	public void addNode(Node<V, K> newNode) {
 		// TODO Auto-generated method stub
 		
 	}
