@@ -9,23 +9,29 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
 
-public class Graph<V, K extends Comparable<K>> {
+public  abstract class Graph<V, K extends Comparable<K>> {
 	
-	private static final double BIG_CONSTANT = Double.POSITIVE_INFINITY;
+//	private static final double BIG_CONSTANT = Double.POSITIVE_INFINITY;
 	private HashMap<K, Node<V,K>> nodes;
-	private AdjacencyMatrix adjacencyMatrix;
-	private AdjacencyList<K> adjacencyList;
+//	private AdjacencyMatrix adjacencyMatrix;
+//	private AdjacencyList<K> adjacencyList;
 	
-	private HashMap parent;
-	private HashMap<K, Boolean> visited; 
-	private HashMap<K, Double> distances;
+//	private HashMap parent;
+//	private HashMap<K, Boolean> visited; 
+//	private HashMap<K, Double> distances;
 	
 	public Graph() {
 		super();
-		nodes = new HashMap<>();
-		visited = new HashMap<>();
-		distances = new HashMap<K, Double>();
+		nodes = new HashMap<K, Node<V,K> >();
+//		visited = new HashMap<>();
+//		distances = new HashMap<K, Double>();
 	}
+	
+	
+	public abstract void addEdge();
+	public abstract void removeEdge();
+	public abstract void addNode( Node<V,K> newNode);
+	public abstract void removeNode();
 	
 	public HashMap<K, Node<V, K>> getNodes() {
 		return nodes;
@@ -33,23 +39,26 @@ public class Graph<V, K extends Comparable<K>> {
 	public void setNodes(HashMap<K, Node<V, K>> nodes) {
 		this.nodes = nodes;
 	}
-	public AdjacencyMatrix getAdjacencyMatrix() {
-		return adjacencyMatrix;
-	}
-	public void setAdjacencyMatrix(AdjacencyMatrix adjacencyMatrix) {
-		this.adjacencyMatrix = adjacencyMatrix;
-	}
-	public AdjacencyList<K> getAdjacencyList() {
-		return adjacencyList;
-	}
-	public void setAdjacencyList(AdjacencyList<K> adjacencyList) {
-		this.adjacencyList = adjacencyList;
-	}
 	
-	public void addNode(Node newNode) {
-		nodes.put((K) newNode.getKey(), newNode);
-		visited.put((K) newNode.getKey(), false);
-	}
+	
+	
+//	public AdjacencyMatrix getAdjacencyMatrix() {
+//		return adjacencyMatrix;
+//	}
+//	public void setAdjacencyMatrix(AdjacencyMatrix adjacencyMatrix) {
+//		this.adjacencyMatrix = adjacencyMatrix;
+//	}
+//	public AdjacencyList<K> getAdjacencyList() {
+//		return adjacencyList;
+//	}
+//	public void setAdjacencyList(AdjacencyList<K> adjacencyList) {
+//		this.adjacencyList = adjacencyList;
+//	}
+	
+//	public void addNode(Node newNode) {
+//		nodes.put((K) newNode.getKey(), newNode);
+//		visited.put((K) newNode.getKey(), false);
+//	}
 	
 	public void removeNode(K keyNode) {
 		nodes.remove(keyNode);	
@@ -185,47 +194,47 @@ public class Graph<V, K extends Comparable<K>> {
 		}
 	}
 	
-	public static void main(String[] args) {
-		Graph<String, Integer> g = new Graph<>();
-		Node<String, Integer> a = new Node<>("A", 10);
-		Node<String, Integer> b = new Node<>("B", 30);
-		Node<String, Integer> c = new Node<>("C", 23);
-		Node<String, Integer> e = new Node<>("E", 5);
-		Node<String, Integer> f = new Node<>("F", 8);
-		Node<String, Integer> x = new Node<>("X", 34);
-		Node<String, Integer> w = new Node<>("W", 13);
-		g.addNode(a);
-		g.addNode(b);
-		g.addNode(c);
-		g.addNode(e);
-		g.addNode(f);
-		g.addNode(x);
-		g.addNode(w);
-		g.addEdge(a.getKey(), b.getKey(), 1, 70);
-		g.addEdge(a.getKey(), c.getKey(), 2, 9);
-		g.addEdge(b.getKey(), e.getKey(), 0, 1);
-		g.addEdge(b.getKey(), c.getKey(), 3, 10);
-		g.addEdge(c.getKey(), f.getKey(), 4, 4);
-		g.addEdge(e.getKey(), f.getKey(), 5, 60);
-		g.addEdge(e.getKey(), x.getKey(), 6, 23);
-		g.addEdge(f.getKey(), w.getKey(), 7, 90);
-		g.addEdge(w.getKey(), x.getKey(), 8, 87);
-		
-		g.djikstra(e);
-		
-		int kl = 100;
-		
-		
-		
-		
-//		for(int i = 0; i < g.bfs(n3).size() ; i ++) {
-//			System.out.println("Valor " + g.bfs(n3).get(i).getValue() + " LLave " + g.bfs(n3).get(i).getKey());
-//		}
+//	public static void main(String[] args) {
+//		Graph<String, Integer> g = new Graph<>();
+//		Node<String, Integer> a = new Node<>("A", 10);
+//		Node<String, Integer> b = new Node<>("B", 30);
+//		Node<String, Integer> c = new Node<>("C", 23);
+//		Node<String, Integer> e = new Node<>("E", 5);
+//		Node<String, Integer> f = new Node<>("F", 8);
+//		Node<String, Integer> x = new Node<>("X", 34);
+//		Node<String, Integer> w = new Node<>("W", 13);
+//		g.addNode(a);
+//		g.addNode(b);
+//		g.addNode(c);
+//		g.addNode(e);
+//		g.addNode(f);
+//		g.addNode(x);
+//		g.addNode(w);
+//		g.addEdge(a.getKey(), b.getKey(), 1, 70);
+//		g.addEdge(a.getKey(), c.getKey(), 2, 9);
+//		g.addEdge(b.getKey(), e.getKey(), 0, 1);
+//		g.addEdge(b.getKey(), c.getKey(), 3, 10);
+//		g.addEdge(c.getKey(), f.getKey(), 4, 4);
+//		g.addEdge(e.getKey(), f.getKey(), 5, 60);
+//		g.addEdge(e.getKey(), x.getKey(), 6, 23);
+//		g.addEdge(f.getKey(), w.getKey(), 7, 90);
+//		g.addEdge(w.getKey(), x.getKey(), 8, 87);
 //		
-		
-		
-		
-	}
+//		g.djikstra(e);
+//		
+//		int kl = 100;
+//		
+//		
+//		
+//		
+////		for(int i = 0; i < g.bfs(n3).size() ; i ++) {
+////			System.out.println("Valor " + g.bfs(n3).get(i).getValue() + " LLave " + g.bfs(n3).get(i).getKey());
+////		}
+////		
+//		
+//		
+//		
+//	}
 
 	
 	
