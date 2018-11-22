@@ -135,8 +135,44 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 	}
 
 	@Override
-	public void kruscal() {
+	public  ArrayList kruscal() {
+		
+		ArrayList<Edge> answer = new ArrayList<Edge>();
+		PriorityQueue<Edge> pq = new PriorityQueue<>(new EdgeCompare());
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix.length; j++) {
+				if(matrix[i][j] != Integer.MAX_VALUE) {
+					pq.add(new Edge<Integer>(super.getNodes().get(keys.get(i)), i, matrix[i][j]));
+				}
+			}
+		}
+		
+		int aux, i, x,y;
+		aux = i = 0;
+		int size = pq.size();
+		
+		
+		UnionStructure union = new UnionStructure<>();
+		
+		
+	    while( aux < (matrix.length-1) && i < size ){
+	        Edge edgeActual = pq.poll();
+	        
+	        K src = (K) union.find(keys.get( edgeActual.getKey() ));
+	        K end = (K) union.find(edgeActual.getEnd().getKey());
+	        
 
+	        if(src.compareTo(end) != 0){
+	        	answer.add(edgeActual);
+	           aux++;
+	           union.union(super.getNodes().get(src), super.getNodes().get(end));
+	        }
+	        i++;
+	    }
+	    
+	    return answer;
+		
+	
 	}
 
 	@Override
@@ -291,6 +327,9 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 //		}
 
 		
+		adjM.imprimir();
+		System.out.println();
+		
 		//Prueba para Floyd Warshall
 //		int[][] matrixClone = adjM.floydWarshall();
 //		for (int i = 0; i < matrixClone.length; i++) {
@@ -305,7 +344,16 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 //			}
 //			System.out.println();
 //		}
-
+		
+		
+		
+		//Prueba para Kruskal
+		ArrayList array = adjM.kruscal();
+		for (int i = 0; i < array.size(); i++) {
+			System.out.println(array.get(i));
+		}
+		
+		
 	}
 
 }

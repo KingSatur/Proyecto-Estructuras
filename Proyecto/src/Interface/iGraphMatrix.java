@@ -1,5 +1,7 @@
 package Interface;
 
+import java.util.ArrayList;
+
 import graph.Directed.Node;
 
 public interface iGraphMatrix<V,K extends Comparable<K>> {
@@ -8,7 +10,7 @@ public interface iGraphMatrix<V,K extends Comparable<K>> {
 	public void bfs(K keyNode);
 	public int[] dijsktra(K keyNode);
 	public int[][] floydWarshall();
-	public void kruscal();
+	public ArrayList kruscal();
 	public void prim();
 	
 	public void addEdge(K keyNodeStart, K keyNodeEnd, double weight);

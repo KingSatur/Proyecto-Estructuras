@@ -36,9 +36,9 @@ public class UnionStructure<V,K extends Comparable<K>> {
 		
 	}
 	
-	public K find(Node<V,K> nodeToSearch) {
+	public K find(K keyNode) {
 		
-		return nodesUbication.get(nodeToSearch.getKey());
+		return nodesUbication.get(keyNode);
 
 	}
 	
