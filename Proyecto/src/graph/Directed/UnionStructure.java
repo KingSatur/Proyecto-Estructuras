@@ -1,5 +1,6 @@
 package graph.Directed;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.PriorityQueue;
@@ -31,27 +32,39 @@ public class UnionStructure<V,K extends Comparable<K>> {
 		this.nodesHash = nodesHash;
 	}
 
-	public void fillHashes(Set<K> keys) {
-
+	public K find(Node<V,K> nodeToSearch) {
 		
-	}
-	
-	public K find(K keyNode) {
-		
-		return nodesUbication.get(keyNode);
+		return nodesUbication.get(nodeToSearch.getKey());
 
 	}
 	
 	public void union(Node<V,K> a, Node<V,K> b ) {
 		
-		if(!nodesHash.get(a).containsKey(b.getKey())) {
-			nodesHash.get(a).values().addAll(nodesHash.get(b).values());
-			nodesUbication.put(b.getKey(), a.getKey());
-			nodesHash.remove(b);		
+		
+		if(!nodesHash.get(nodesUbication.get(a.getKey())).containsKey(nodesUbication.get(b.getKey()))) {
+			if(nodesHash.get(nodesUbication.get(a.getKey())).values() == null) {
+				nodesHash.put(nodesUbication.get(a.getKey()), nodesHash.get(nodesUbication.get(b.getKey())));
+				nodesUbication.put(nodesUbication.get(b.getKey()), nodesUbication.get(a.getKey()));
+				nodesHash.remove(b.getKey());	
+			}
+			else {
+				if(nodesHash.get(nodesUbication.get(b.getKey())).size() == 0) {
+					nodesHash.get(nodesUbication.get(a.getKey())).put(nodesUbication.get(b.getKey()), b);
+					nodesUbication.put(nodesUbication.get(b.getKey()), nodesUbication.get(a.getKey()));
+					nodesHash.remove(b.getKey());
+				}
+				else {
+					for(Node<V,K> m : nodesHash.get(nodesUbication.get(b.getKey())).values()) {
+						nodesHash.get(nodesUbication.get(a.getKey())).put(m.getKey(), m);
+					}
+					nodesUbication.put(nodesUbication.get(b.getKey()), nodesUbication.get(a.getKey()));
+					nodesHash.remove(b.getKey());
+				}
+
+			}
 		}
-				
+		
 	}
-	
 	
 	
 	

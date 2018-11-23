@@ -13,6 +13,6 @@ public interface iGraphList<V,K extends Comparable<K>> {
 	public ArrayList<Node<V,K>> dfs(Node<V,K> source);
 	public ArrayList<Node<V,K>> bfs(Node<V,K> source);
 	public void dijsktra(Node<V,K> s);
-	public void kruscal();
+	public ArrayList<Node<V,K>> kruscal();
 	public ArrayList<Node<V,K>> prim(Node<V,K> source);
 }
