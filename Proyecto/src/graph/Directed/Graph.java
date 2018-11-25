@@ -14,13 +14,16 @@ public  abstract class Graph<V, K extends Comparable<K>> {
 	
 
 	private HashMap<K, Node<V,K>> nodes;
+
 	private HashMap<K, EdgeSrcEnd<K>> generalEdges;
 
 	
 	public Graph() {
 		super();
 		nodes = new HashMap<K, Node<V,K> >();
+
 		generalEdges = new HashMap<K, EdgeSrcEnd<K>>();
+
 	}
 	
 	public HashMap<K, Node<V, K>> getNodes() {
@@ -42,5 +45,4 @@ public  abstract class Graph<V, K extends Comparable<K>> {
 	
 }
 	
-	
-	
+
