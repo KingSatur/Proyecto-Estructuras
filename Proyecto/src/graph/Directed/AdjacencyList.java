@@ -10,10 +10,11 @@ import java.util.Queue;
 import java.util.Stack;
 
 import Interface.iGraphList;
+import graph.Undirected.AdjacencyListUndirected;
 
 public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implements iGraphList<V,K>{
 
-	private HashMap<K, PriorityQueue<Node<V,K>>> adj;
+	protected HashMap<K, PriorityQueue<Node<V,K>>> adj;
 	private double routSume;
 	
 	public AdjacencyList() {
@@ -158,37 +159,55 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 
 	
 	@Override
-	public void kruscal() {
+	public ArrayList<Node<V,K>> kruscal() {
 		
 		Comparator<Edge> m = new EdgeCompare();
-		PriorityQueue<Edge> edgesQueue = new PriorityQueue<Edge>(m);
+		PriorityQueue<Edge<K>> edgesQueue = new PriorityQueue<Edge<K>>(m);
+		Hashtable<Edge<K>, K> sourceEdgeUbication = new Hashtable<Edge<K>, K>();
+		Hashtable<K, Boolean> visited = new Hashtable<K, Boolean>();
 		
 		//OBTENGO LAS ARISTAS DE TODO EL GRAFO Y LAS ORDENO
 		for(Node<V,K> node: super.getNodes().values()) {
-			for(Edge e : node.getEdges().values()) {
+			for(Edge<K> e : node.getEdges().values()) {
 				edgesQueue.add(e);
+				sourceEdgeUbication.put(e, node.getKey());
 			}
 		}
-	
+		
 		//INICIALIZO LA RUTA DE PADRES Y LA ESTRUCTURA DE UNION
 		ArrayList<Node<V,K>> route = new ArrayList<Node<V,K>>();
 		UnionStructure<V,K> union = new UnionStructure<V,K>();
 		
 		for(K key: super.getNodes().keySet()) {
 			union.getNodesUbication().put(key, key);
-			union.getNodesHash().put(key, null);
+			union.getNodesHash().put(key, new Hashtable<K, Node<V,K>>());
 		}
 		
-		while(route.size() != super.getNodes().size()) {
-			
+		while(visited.size() != super.getNodes().size()) {
+			K keySource = sourceEdgeUbication.get(edgesQueue.peek());
+			if(visited.get(keySource) != null && visited.get(edgesQueue.peek().getEnd().getKey()) != null) {
+				if(visited.get(keySource) && visited.get(edgesQueue.peek().getEnd().getKey())){
+					edgesQueue.poll();
+				}						
+			}
+			else {
+				if(! union.find(edgesQueue.peek().getEnd()).equals(keySource)) {
+					union.union(super.getNodes().get(keySource), edgesQueue.peek().getEnd());
+					route.add(super.getNodes().get(keySource));
+					route.add(edgesQueue.peek().getEnd());
+					visited.put(keySource, true);
+					visited.put((K) edgesQueue.peek().getEnd().getKey(), true);
+					edgesQueue.poll();
+				}
+			}
 		}
 		
-		
+		return route;
 		
 	}
 
 	@Override
-	public ArrayList<Node<V,K>> prim(Node<V,K> source) {
+	public ArrayList<Node<V, K>> prim(Node<V,K> source) {
 		
 		//CREO LA RUTA DE PADRES
 		ArrayList<Node<V,K>> route = new ArrayList<Node<V,K>>();
@@ -199,6 +218,7 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 		
 		//CREO EL HASH DE VISITADOS
 		Hashtable<K, Boolean> visited = new Hashtable<K, Boolean>();
+		fillVisited(visited);
 		
 		//CREO LA COLA DE ARISTAS
 		PriorityQueue<Edge<K>> edgesQueue = new PriorityQueue<Edge<K>>(m);
@@ -215,6 +235,7 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 		
 		while(route.size() != super.getNodes().size()) {
 			Node<V,K> node = edgesQueue.peek().getEnd();
+			K k = node.getKey();
 			if(visited.get(node.getKey())) {
 				edgesQueue.poll();
 			}
@@ -230,6 +251,16 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 		return route;
 	}
 
+	
+	public void fillVisited(Hashtable<K, Boolean> visited) {
+		
+		for(K key : super.getNodes().keySet()) {
+			visited.put(key, false);
+		}
+		
+	}
+	
+	
 	public void fillQueue(PriorityQueue<Edge<K>> queue, Node<V,K> node) {
 		
 		for(Edge e : node.getEdges().values()) {
@@ -265,26 +296,5 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 	}
 	
 	
-	public static void main(String[] args) {
-		
-		AdjacencyList<String,Integer> graph = new AdjacencyList<String,Integer>();
-		Node<String,Integer> n1 = new Node<String,Integer>("A", 10);
-		Node<String,Integer> n2 = new Node<String,Integer>("B", 60);
-		Node<String,Integer> n3 = new Node<String,Integer>("C", 100);
-		Node<String,Integer> n4 = new Node<String,Integer>("D", 67);
-		graph.addNode(n1);
-		graph.addNode(n2);
-		graph.addNode(n3);
-		graph.addNode(n4);
-		graph.addEdge(n1.getKey(), n2.getKey(), 3, 40);
-		graph.addEdge(n1.getKey(), n3.getKey(), 6, 100);
-		graph.addEdge(n2.getKey(), n3.getKey(), 2, 1);
-		graph.addEdge(n3.getKey(), n4.getKey(), 6, 4);
-		
-		int j = 100;
-		
-		
-		
-	}
 	
 }
