@@ -1,7 +1,6 @@
 package graph.Directed;
 
-//WEIGHT "W" PARA EL PESO
-//KEY "K" PARA ALGUNAS OPERACIONES 
+
 public class Edge<K extends Comparable<K>>  {
 
 	private Node end;
