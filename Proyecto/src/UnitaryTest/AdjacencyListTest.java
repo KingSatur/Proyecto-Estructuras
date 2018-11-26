@@ -72,7 +72,6 @@ class AdjacencyListTest {
 		trueRoute.put(40, 20);
 		trueRoute.put(30, 50);		
 	
-		
 		for(Integer key: trueRoute.keySet()) {
 			assertTrue(fathersRoute.get(key).equals(trueRoute.get(key)));
 		}
