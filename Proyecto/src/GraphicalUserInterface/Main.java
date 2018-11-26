@@ -1,4 +1,4 @@
-package interfaze;
+package GraphicalUserInterface;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
