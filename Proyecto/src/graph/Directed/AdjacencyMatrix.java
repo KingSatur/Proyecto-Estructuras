@@ -155,20 +155,20 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 		UnionStructure union = new UnionStructure<>();
 		
 		
-	    while( aux < (matrix.length-1) && i < size ){
-	        Edge edgeActual = pq.poll();
-	        
-	        K src = (K) union.find(keys.get( edgeActual.getKey() ));
-	        K end = (K) union.find(edgeActual.getEnd().getKey());
-	        
-
-	        if(src.compareTo(end) != 0){
-	        	answer.add(edgeActual);
-	           aux++;
-	           union.union(super.getNodes().get(src), super.getNodes().get(end));
-	        }
-	        i++;
-	    }
+//	    while( aux < (matrix.length-1) && i < size ){
+//	        Edge edgeActual = pq.poll();
+//	        
+//	        K src = (K) union.find(keys.get( edgeActual.getKey() ));
+//	        K end = (K) union.find(edgeActual.getEnd().getKey());
+//	        
+//
+//	        if(src.compareTo(end) != 0){
+//	        	answer.add(edgeActual);
+//	           aux++;
+//	           union.union(super.getNodes().get(src), super.getNodes().get(end));
+//	        }
+//	        i++;
+//	    }
 	    
 	    return answer;
 		
