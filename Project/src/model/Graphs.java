@@ -10,7 +10,7 @@ public class Graphs {
 	private AdjacencyMatrixUndirected<Point, Integer> simpleUndirectedGraph;
 	private AdjacencyListUndirected<Point, Integer> undirectedMultigraph;
 	private AdjacencyListUndirected<Point, Integer> undirectedPseudoGraph;
-	hola
+	
 	
 	
 	public Graphs() {
