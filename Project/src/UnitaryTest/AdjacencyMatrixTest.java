@@ -22,8 +22,6 @@ class AdjacencyMatrixTest {
 	private void setup1() {
 		
 		graphMatrix = new AdjacencyMatrix<Integer, Integer>();
-		
-		
 	}
 	
 	private void setup2() {
