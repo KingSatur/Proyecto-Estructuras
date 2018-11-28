@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class DialogSimpleDirected extends JDialog {
 	
@@ -28,8 +29,9 @@ public class DialogSimpleDirected extends JDialog {
 		
 		panelSimpleDirected = new PanelSimpleDirected();
 		getContentPane().add(panelSimpleDirected);
-		setSize(ANCHO, ALTO);
+		setSize(815, 521);
 		JLabel lblNewLabel = new JLabel("Simple Dirigido");
+		lblNewLabel.setFont(new Font("Tw Cen MT", Font.PLAIN, 18));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		getContentPane().add(lblNewLabel, BorderLayout.NORTH);
 		setResizable(false);

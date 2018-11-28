@@ -2,55 +2,45 @@ package graphicInterface;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class DialogMultiGraphUndirected extends JDialog {
 
 	private PanelMultiUndirected panelMultiUndirected;
-	private final JPanel contentPanel = new JPanel();
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			DialogMultiGraphUndirected dialog = new DialogMultiGraphUndirected();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private Main main;
 
 	/**
 	 * Create the dialog.
 	 */
-	public DialogMultiGraphUndirected() {
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setLayout(new FlowLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
-		}
+	public DialogMultiGraphUndirected(Main main) {
+		this.main = main;
+		panelMultiUndirected = new PanelMultiUndirected(main);
+		getContentPane().add(panelMultiUndirected);
+		setSize(815, 521);
+		JLabel lblNewLabel = new JLabel("Multigrafo no dirigido");
+		lblNewLabel.setFont(new Font("Tw Cen MT", Font.PLAIN, 18));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		getContentPane().add(lblNewLabel, BorderLayout.NORTH);
+		setResizable(false);
 	}
+
+	public Main getMain() {
+		return main;
+	}
+
+	public void setMain(Main main) {
+		this.main = main;
+	}
+	
+	
+	
+	
 
 }

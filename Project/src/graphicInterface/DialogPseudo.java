@@ -1,57 +1,39 @@
 package graphicInterface;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
-import javax.swing.JButton;
+import java.awt.Font;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class DialogPseudo extends JDialog {
 
-	private final JPanel contentPanel = new JPanel();
 	private PanelPseudo panelPseudo;
-	
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			DialogPseudo dialog = new DialogPseudo();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private Main main;
 
 	/**
 	 * Create the dialog.
 	 */
-	public DialogPseudo() {
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setLayout(new FlowLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
-		}
+	public DialogPseudo(Main main) {
+		this.main = main;
+		panelPseudo = new PanelPseudo(main);
+		getContentPane().add(panelPseudo);
+		this.setSize(815, 521);
+		JLabel lblNewLabel = new JLabel("Pseudografo no dirigido");
+		lblNewLabel.setFont(new Font("Tw Cen MT", Font.PLAIN, 18));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		this.getContentPane().add(lblNewLabel, BorderLayout.NORTH);
+		this.setResizable(false);
 	}
 
+	public Main getMain() {
+		return main;
+	}
+
+	public void setMain(Main main) {
+		this.main = main;
+	}
+	
+	
+	
 }

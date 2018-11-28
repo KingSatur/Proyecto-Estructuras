@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
+import java.awt.Font;
 
 public class PanelSimpleDirected extends JPanel {
 
@@ -31,20 +32,31 @@ public class PanelSimpleDirected extends JPanel {
 		
 		add(panelButton, BorderLayout.NORTH);
 		panelButton.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		btnNewButton.setFont(new Font("Tw Cen MT", Font.PLAIN, 11));
+		btnNewButton.setBackground(Color.WHITE);
+		btnNewButton.setForeground(Color.BLACK);
 		
 		panelButton.add(btnNewButton);
+		btnNewButton_1.setFont(new Font("Tw Cen MT", Font.PLAIN, 11));
+		btnNewButton_1.setBackground(Color.WHITE);
 		
 		panelButton.add(btnNewButton_1);
+		btnNewButton_2.setFont(new Font("Tw Cen MT", Font.PLAIN, 11));
+		btnNewButton_2.setBackground(Color.WHITE);
 		
 		panelButton.add(btnNewButton_2);
+		btnNewButton_3.setFont(new Font("Tw Cen MT", Font.PLAIN, 11));
+		btnNewButton_3.setBackground(Color.WHITE);
 		
 		
 		panelButton.add(btnNewButton_3);
 		add(panelBack, BorderLayout.CENTER);
 		panelBack.setLayout(null);
+		panelStructure.setBackground(Color.GRAY);
 		
 		panelStructure.setBounds(293, 11, 502, 415);
 		panelBack.add(panelStructure);
+		lblStructure.setFont(new Font("Tw Cen MT", Font.PLAIN, 20));
 		
 		panelStructure.add(lblStructure);
 		
@@ -53,9 +65,9 @@ public class PanelSimpleDirected extends JPanel {
 		panelGraph.setSize(new Dimension(273, 415));
 		panelGraph.setBackground(Color.RED);
 		panelGraph.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 5));
+		lblNewLabel.setFont(new Font("Tw Cen MT", Font.PLAIN, 24));
 		
 		panelGraph.add(lblNewLabel);
 
 	}
-
 }
