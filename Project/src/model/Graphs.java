@@ -16,6 +16,7 @@ public class Graphs {
 		createSimpleUndirectedGraph();
 		createSimpleGraph();
 		createMultiGraph();
+		createPseudo();
 	}
 	
 	public void createMultiGraph() {
@@ -77,6 +78,38 @@ public class Graphs {
 		simpleDirectedGraph.addEdge(1, 2, 7, 1);
 		
 	}
+	
+	
+	public void createPseudo() {
+		
+		undirectedPseudoGraph = new AdjacencyListUndirected<Point, Integer>();
+		Point one = new Point(40, 30, 40);
+		Point two = new Point(40, 190, 40);
+		Point three = new Point(240, 95, 40);
+		Point four = new Point(450, 30, 40);
+		Point five = new Point(450, 190, 40);
+		Node<Point, Integer> nodeOne = new Node<Point, Integer>(one, 11);
+		Node<Point, Integer> nodeTwo = new Node<Point, Integer>(two, 22);
+		Node<Point, Integer> nodeThree = new Node<Point, Integer>(three, 33);
+		Node<Point, Integer> nodeFour = new Node<Point, Integer>(four, 44);
+		Node<Point, Integer> nodeFive = new Node<Point, Integer>(five, 55);
+		undirectedPseudoGraph.addNode(nodeOne);
+		undirectedPseudoGraph.addNode(nodeTwo);
+		undirectedPseudoGraph.addNode(nodeThree);
+		undirectedPseudoGraph.addNode(nodeFour);
+		undirectedPseudoGraph.addNode(nodeFive);
+		undirectedPseudoGraph.addEdge(11, 22, 20, 20);
+		undirectedPseudoGraph.addEdge(11, 22, 10, 7);
+		undirectedPseudoGraph.addEdge(11, 33, 9, 6);
+		undirectedPseudoGraph.addEdge(33, 22, 25, 4);
+		undirectedPseudoGraph.addEdge(11, 44, 17, 1);
+		undirectedPseudoGraph.addEdge(11, 44, 23, 8);
+		undirectedPseudoGraph.addEdge(22, 55, 79, 6);
+		undirectedPseudoGraph.addEdge(44, 55, 13, 3);		
+				
+		
+	}
+	
 	
 	public void createMultigraphUndirected() {
 		undirectedMultigraph = new AdjacencyListUndirected<Point, Integer>();

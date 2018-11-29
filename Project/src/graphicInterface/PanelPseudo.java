@@ -70,7 +70,11 @@ public class PanelPseudo extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource().equals(bfs)) {
-			
+			panelStructure = new PanelStructures("BFS", Color.blue);
+			panelStructure.setNodesToPaint(main.getGraphs().getUndirectedPseudoGraph().getNodes());
+			panelStructure.setLinesToPaint(main.getGraphs().getUndirectedPseudoGraph().getGeneralEdges());
+			panelContainer.add(panelStructure);
+			panelStructure.repaint();
 		}
 		else if(e.getSource().equals(dfs)) {
 
