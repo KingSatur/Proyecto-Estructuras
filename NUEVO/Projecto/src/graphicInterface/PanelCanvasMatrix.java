@@ -132,9 +132,8 @@ public class PanelCanvasMatrix extends JPanel implements ActionListener {
 		for (int i = 0; i < matrixRelation.length; i++) {
 			for (int j = 0; j < matrixRelation.length; j++) {
 				
-				if(matrixRelation[i][j] == 1) {
+				if(matrixRelation[i][j] == 1 ) {
 					g.setColor(Color.RED);
-					System.out.println("arista");
 				}else {
 					g.setColor(Color.BLACK);
 				}
@@ -151,7 +150,10 @@ public class PanelCanvasMatrix extends JPanel implements ActionListener {
 				int r = p2.getRadius();
 				g.drawLine(x1 + r, y1 + r, x2 + r, y2 + r);
 				g.setColor(Color.BLACK);
-				g.drawString(matrix[i][j].getWeightKey()+"", (x1+x2)/2, (y1+y2)/2);
+				
+				if(matrix[i][j].getWeightKey() != Double.MAX_VALUE && matrix[i][j].getWeightKey() != 0.0) {
+					g.drawString(matrix[i][j].getWeightKey()+"", (x1+x2)/2, (y1+y2)/2);					
+				}
 			}
 
 		}

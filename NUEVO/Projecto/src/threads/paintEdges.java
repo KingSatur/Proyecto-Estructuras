@@ -37,7 +37,8 @@ public class paintEdges extends Thread{
 					
 					if(!isDirected) {
 						panelCanvas.getMatrix()[node-1][father-1] = 1;
-						panelCanvas.getMatrix()[father-1][node-1] = 1;					
+						panelCanvas.getMatrix()[father-1][node-1] = 1;			
+						System.out.println("no entrar");
 					}else {
 						panelCanvas.getMatrix()[node-1][father-1] = 1;
 					}

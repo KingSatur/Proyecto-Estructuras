@@ -59,31 +59,53 @@ public class Graphs {
 		
 		simpleUndirectedGraph = new AdjacencyMatrixUndirected<Point, Integer>();
 		
-		Point p1 = new Point(160, 190, 15);
-		Point p2 = new Point(460, 190, 15);
-		Point p3 = new Point(310, 400, 15);
+		Point p1 = new Point(160, 190, 20);
+		Point p2 = new Point(460, 190, 20);
+		Point p3 = new Point(310, 400, 20);
+		Point p4 = new Point(610, 400, 20);
+		Point p5 = new Point(760, 190, 20);
+		
 		
 		simpleUndirectedGraph.addNode(new Node<Point, Integer>(p1, 1));
 		simpleUndirectedGraph.addNode(new Node<Point, Integer>(p2, 2));
 		simpleUndirectedGraph.addNode(new Node<Point, Integer>(p3, 3));
+		simpleUndirectedGraph.addNode(new Node<Point, Integer>(p4, 4));
+		simpleUndirectedGraph.addNode(new Node<Point, Integer>(p5, 5));
 		
 		simpleUndirectedGraph.addEdge(1, 2, 6, 1);
-		simpleUndirectedGraph.addEdge(1, 3, 2, 2);
-		simpleUndirectedGraph.addEdge(3, 2, 3, 3);
-		
+		simpleUndirectedGraph.addEdge(1, 3, 4, 2);
+		simpleUndirectedGraph.addEdge(3, 2, 10, 3);
+		simpleUndirectedGraph.addEdge(2, 5, 12, 4);
+		simpleUndirectedGraph.addEdge(3, 5, 3, 5);
+		simpleUndirectedGraph.addEdge(5, 4, 5, 6);
+		simpleUndirectedGraph.addEdge(2, 4, 1, 7);
 	}
 	
 	public void createSimpleGraph() {
 		simpleDirectedGraph = new AdjacencyMatrix<Point, Integer>();
 		
-		Point p1 = new Point(160, 190, 15);
-		Point p2 = new Point(460, 190, 15);
-	
+		Point p1 = new Point(160, 190, 20);
+		Point p2 = new Point(460, 190, 20);
+		Point p3 = new Point(760, 190, 20);
+		Point p4 = new Point(160, 400, 20);
+		Point p5 = new Point(460, 400, 20);
+		Point p6 = new Point(760, 400, 20);
 		
 		simpleDirectedGraph.addNode(new Node<Point, Integer>(p1, 1));
-		simpleDirectedGraph.addNode(new Node<Point, Integer>(p2, 2));
+		simpleDirectedGraph.addNode(new Node<Point, Integer>(p4, 2));
+		simpleDirectedGraph.addNode(new Node<Point, Integer>(p2, 3));
+		simpleDirectedGraph.addNode(new Node<Point, Integer>(p5, 4));
+		simpleDirectedGraph.addNode(new Node<Point, Integer>(p3, 5));
+		simpleDirectedGraph.addNode(new Node<Point, Integer>(p6, 6));
 		
-		simpleDirectedGraph.addEdge(1, 2, 7, 1);
+		
+		simpleDirectedGraph.addEdge(1, 2, 2, 1);
+		simpleDirectedGraph.addEdge(1, 3, 4, 2);
+		simpleDirectedGraph.addEdge(3, 4, 7, 3);
+		simpleDirectedGraph.addEdge(2, 4, 10, 4);
+		simpleDirectedGraph.addEdge(3, 5, 23, 5);
+		simpleDirectedGraph.addEdge(4, 6, 8, 6);
+		simpleDirectedGraph.addEdge(5, 6, 5, 7);
 		
 	}
 	
@@ -175,14 +197,6 @@ public class Graphs {
 		this.undirectedPseudoGraph = undirectedPseudoGraph;
 	}
 	
-	public static void main(String[] args) {
-		
-		Graphs g = new Graphs();
-		int x = 100;
-		
-		int c = x +10;
 	
-		
-	}
 	
 }

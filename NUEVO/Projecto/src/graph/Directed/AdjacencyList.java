@@ -403,40 +403,6 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 	
 	
 	
-	public static void main(String[] args) {
-		
-		AdjacencyList<String,Integer> graph = new AdjacencyList<String,Integer>();
-		Node<String,Integer> n1 = new Node<String,Integer>("1", 10);
-		Node<String,Integer> n2 = new Node<String,Integer>("2", 60);
-		Node<String,Integer> n3 = new Node<String,Integer>("3", 100);
-		Node<String,Integer> n4 = new Node<String,Integer>("4", 67);
-		Node<String,Integer> n7 = new Node<String,Integer>("7", 7);
-		graph.addNode(n1);
-		graph.addNode(n2);
-		graph.addNode(n3);
-		graph.addNode(n4);
-		graph.addNode(n7);
-		graph.addEdge(10, 60, 4, 3);
-		graph.addEdge(10, 100, 6, 2);
-		graph.addEdge(10, 67, 8, 1);
-		graph.addEdge(60, 100, 7, 4);
-		graph.addEdge(60, 67, 2, 1);
-		graph.addEdge(67, 100, 6, 6);
-		graph.addEdge(10, 7, 100, 0.5);
-		graph.addEdge(7, 60, 45, 0.5);
-		graph.addEdge(7, 67, 54, 0.2);
-		HashMap<Integer, Double> distances = graph.dijsktra(n1);
-		int j = 100;
-		
-		
-		
-		
-		
-
-		
-		
-		
-		
-	}
+	
 	
 }
