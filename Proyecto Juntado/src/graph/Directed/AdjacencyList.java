@@ -29,6 +29,8 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 	private PriorityQueue<Node<V,K>> nodesQueue;
 	private PriorityQueue<Edge<K>> edgesQueue;
 	
+	
+	
 	public AdjacencyList() {
 		super();
 		minimumRouteSume = 0;
@@ -43,6 +45,14 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 		edgesQueue = new PriorityQueue<Edge<K>>();
 	}
 	
+	
+	public HashMap<K, K> getFathers() {
+		return fathers;
+	}
+
+	public void setFathers(HashMap<K, K> fathers) {
+		this.fathers = fathers;
+	}
 
 	public ArrayList<Node<V, K>> getGeneralRoute() {
 		return generalRoute;
@@ -72,6 +82,7 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 		//VACIO LA RUTA GENERAL PARA APLICAR EL ALGORITMO
 		generalRoute.clear();
 		nodesVisited = new HashMap<K, Boolean>();
+		fillVisitedFalse(nodesVisited);
 		fathers = new HashMap<K,K>();
 		stack = new Abstract<Node<V,K>>();
 		
@@ -83,7 +94,7 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 		nodesVisited.put((K) source.getKey(), true);
 		stack.push(source);
 		
-		while (!stack.isEmpty() && fathers.size() != super.getNodes().size() - 1) {
+		while (!stack.isEmpty() && fathers.size() != super.getNodes().size() && generalRoute.size() != super.getNodes().size()) {
 			Node<V, K> u = stack.pop();
 			for (Node<V, K> nodeAdjacenty : u.getNeighbors()) {
 				if (!nodesVisited.get(nodeAdjacenty.getKey())) {
@@ -91,12 +102,16 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 				}
 			}
 			fathers.put(stack.top().getData().getKey(), u.getKey());
-			generalRoute.add(u);
+			if(!generalRoute.contains(u)) {
+				generalRoute.add(u);				
+			}
 			nodesVisited.put(u.getKey(),true );
 		}
 		
 		return fathers;
 	}
+	
+	
 	
 	
 	@Override
@@ -111,6 +126,7 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 		//VACIO LA RUTA GENERAL PARA APLICAR EL ALGORITMO
 		generalRoute.clear();
 		nodesVisited = new HashMap<K, Boolean>();
+		fillVisitedFalse(nodesVisited);
 		fathers = new HashMap<K, K>();
 		
 		for (K key : super.getNodes().keySet()) {
@@ -120,7 +136,7 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 		nodesVisited.put((K) source.getKey(), true);
 		queue = new Abstract<Node<V, K>>();
 		queue.enqueue(source);
-		while (!queue.isEmpty() && fathers.size() != super.getNodes().size() - 1) {
+		while (!queue.isEmpty() && fathers.size() != super.getNodes().size()  && generalRoute.size() != super.getNodes().size()) {
 			Node<V, K> u = queue.dequeue();
 			for (Node<V, K> nodeAdjacenty : u.getNeighbors()) {
 				Node<V, K> v = nodeAdjacenty;
@@ -132,12 +148,16 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 				}
 			}
 			fathers.put(queue.front().getData().getKey(), u.getKey());
-			generalRoute.add(u);
-			nodesVisited.put(u.getKey(),true );
+			if(!generalRoute.contains(u)) {
+				generalRoute.add(u);				
+			}
+			nodesVisited.put(u.getKey(),true );								
 		}
 		
 		return fathers;
 	}
+	
+	
 	
 	public void fillDistances(HashMap<K, Double> distances) {
 				
@@ -350,6 +370,7 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 	}
 	
 	
+	
 	@Override
 	public void addEdge(K keySource, K keyDestiny, K keyEdge, double weight) {
 		super.getNodes().get(keySource).addEdge(super.getNodes().get(keyDestiny), keyEdge, weight);		
@@ -376,6 +397,10 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 	public void addNode(Node<V, K> newNode) {
 		super.getNodes().put(newNode.getKey(), newNode);
 	}
+	
+	
+	
+	
 	
 	
 	public static void main(String[] args) {

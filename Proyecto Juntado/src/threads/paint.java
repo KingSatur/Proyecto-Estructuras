@@ -28,7 +28,7 @@ public class paint extends Thread {
 			nodes.get(key).getValue().getColor().setColor(Point.RED);
 			panelCanvas.repaint();
 			try {
-				sleep(1000);
+				sleep(5000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

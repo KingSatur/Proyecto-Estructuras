@@ -10,12 +10,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
 import graph.Directed.Edge;
 import graph.Directed.Node;
 import model.Point;
+import threads.PaintThreadMultiGraph;
 
 public class PanelMultiUndirected extends JPanel implements ActionListener{
 	
@@ -26,13 +28,11 @@ public class PanelMultiUndirected extends JPanel implements ActionListener{
 	private JButton prime;
 	private JPanel panelContainer;
 	private PanelStructures panelStructure;
-	private PanelGraph panelGraph;
 	private Main main;
 	
 	public PanelMultiUndirected(Main main) {
 		
 		this.main = main;
-		panelGraph = new PanelGraph(main);
 		panelButton = new JPanel();
 		panelContainer = new JPanel();
 		this.setBackground(Color.LIGHT_GRAY);
@@ -67,9 +67,8 @@ public class PanelMultiUndirected extends JPanel implements ActionListener{
 		panelButton.add(prime);
 		
 		add(panelContainer, BorderLayout.CENTER);
-		panelContainer.setLayout(null);
-		panelContainer.add(panelGraph);
-		panelGraph.setLayout(null);
+		panelContainer.setLayout(new BorderLayout());
+		
 	}
 	
 	
@@ -83,6 +82,13 @@ public class PanelMultiUndirected extends JPanel implements ActionListener{
 			panelStructure.setLinesToPaint(main.getGraphs().getUndirectedMultigraph().getGeneralEdges());
 			panelContainer.add(panelStructure);
 			panelStructure.repaint();
+			String nodeSource = JOptionPane.showInputDialog("Introduce node´s key");
+			if(nodeSource != null) {
+				Node<Point, Integer> nod = main.getGraphs().getUndirectedMultigraph().getNodes().get(Integer.parseInt(nodeSource));
+				main.getGraphs().getUndirectedMultigraph().bfs(nod);
+				PaintThreadMultiGraph thread = new PaintThreadMultiGraph(main.getGraphs(), panelStructure, "BFS");
+				thread.start();
+			}
 		}
 		else if(e.getSource().equals(dfs)) {
 			panelStructure = new PanelStructures("DFS", Color.yellow);
@@ -90,9 +96,16 @@ public class PanelMultiUndirected extends JPanel implements ActionListener{
 			panelStructure.setLinesToPaint(main.getGraphs().getUndirectedMultigraph().getGeneralEdges());
 			panelContainer.add(panelStructure);
 			panelStructure.repaint();
+			String nodeSource = JOptionPane.showInputDialog("Introduce node´s key");
+			if(nodeSource != null) {
+				Node<Point, Integer> nod = main.getGraphs().getUndirectedMultigraph().getNodes().get(Integer.parseInt(nodeSource));
+				main.getGraphs().getUndirectedMultigraph().dfs(nod);
+				PaintThreadMultiGraph thread = new PaintThreadMultiGraph(main.getGraphs(), panelStructure, "DFS");
+				thread.start();
+			}
 		}
 		if(e.getSource().equals(prime)) {
-			panelStructure = new PanelStructures("PRIM", Color.GREEN);
+			panelStructure = new PanelStructures("PRIM", Color.DARK_GRAY);
 			panelStructure.setNodesToPaint(main.getGraphs().getUndirectedMultigraph().getNodes());
 			panelStructure.setLinesToPaint(main.getGraphs().getUndirectedMultigraph().getGeneralEdges());
 			panelContainer.add(panelStructure);
@@ -104,6 +117,9 @@ public class PanelMultiUndirected extends JPanel implements ActionListener{
 			panelStructure.setLinesToPaint(main.getGraphs().getUndirectedMultigraph().getGeneralEdges());
 			panelContainer.add(panelStructure);
 			panelStructure.repaint();
+			main.getGraphs().getUndirectedMultigraph().kruscal();
+			PaintThreadMultiGraph thread = new PaintThreadMultiGraph(main.getGraphs(), panelStructure, "KRUSKAL");
+			thread.start();
 		}		
 	}
 }

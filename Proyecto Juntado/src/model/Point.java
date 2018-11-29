@@ -4,8 +4,6 @@ public class Point {
 
 	public static final int RED = 1;
 	public static final int BLACK = 0;
-	
-	
 	private int xPosition;
 	private int yPosition;
 	private int radius;

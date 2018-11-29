@@ -28,7 +28,6 @@ public class PanelPseudo extends JPanel implements ActionListener {
 	public PanelPseudo(Main main) {
 		
 		this.main = main;
-		panelGraph = new PanelGraph(main);
 		panelButton = new JPanel();
 		panelContainer = new JPanel();
 		this.setBackground(Color.LIGHT_GRAY);
@@ -63,9 +62,8 @@ public class PanelPseudo extends JPanel implements ActionListener {
 		panelButton.add(prime);
 		
 		add(panelContainer, BorderLayout.CENTER);
-		panelContainer.setLayout(null);
-		panelContainer.add(panelGraph);
-		panelGraph.setLayout(null);
+		panelContainer.setLayout(new BorderLayout());
+		
 	}
 
 	@Override

@@ -11,8 +11,6 @@ public interface iGraphList<V,K extends Comparable<K>> {
 	public void removeEdge(K keyNode, K keyEdge);
 	public void addNode(Node<V,K> newNode);
 	public void removeNode(K keyNode);
-
-
 	public HashMap<K,K> dfs(Node<V,K> source);
 	public HashMap<K,K> bfs(Node<V,K> source);
 	public HashMap<K, Double> dijsktra(Node<V,K> s);

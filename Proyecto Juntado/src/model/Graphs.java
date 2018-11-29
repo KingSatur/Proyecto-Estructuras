@@ -42,7 +42,8 @@ public class Graphs {
 		undirectedMultigraph.addEdge(1, 4, 17, 1);
 		undirectedMultigraph.addEdge(1, 4, 23, 8);
 		undirectedMultigraph.addEdge(2, 5, 79, 6);
-		undirectedMultigraph.addEdge(4, 5, 13, 3);			
+		undirectedMultigraph.addEdge(4, 5, 13, 3);
+		undirectedMultigraph.dfs(nodeOne);
 	}
 	
 	public void createSimpleUndirectedGraph() {
@@ -128,7 +129,9 @@ public class Graphs {
 	public static void main(String[] args) {
 		
 		Graphs g = new Graphs();
+		int x = 100;
 		
+		int c = x +10;
 	
 		
 	}

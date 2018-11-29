@@ -23,7 +23,7 @@ public class DialogMultiGraphUndirected extends JDialog {
 		this.main = main;
 		panelMultiUndirected = new PanelMultiUndirected(main);
 		getContentPane().add(panelMultiUndirected);
-		setSize(815, 521);
+		setSize(848, 521);
 		JLabel lblNewLabel = new JLabel("Multigrafo no dirigido");
 		lblNewLabel.setFont(new Font("Tw Cen MT", Font.PLAIN, 18));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
