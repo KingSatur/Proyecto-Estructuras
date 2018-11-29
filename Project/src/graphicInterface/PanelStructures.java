@@ -16,7 +16,7 @@ import graph.Directed.Node;
 import javafx.scene.shape.LineTo;
 import model.Point;
 
-public class PanelStructures extends JPanel{
+public class PanelStructures extends JPanel {
 
 	private JLabel labelStructures;
 	private ArrayList<Node<Point, Integer>> route;
@@ -26,7 +26,7 @@ public class PanelStructures extends JPanel{
 	private HashMap<Integer, Boolean> nodesPainted;
 	private String algoritm;
 	private Color color;
-	
+
 	public PanelStructures(String algoritm, Color color) {
 		this.setVisible(true);
 		this.algoritm = algoritm;
@@ -40,9 +40,9 @@ public class PanelStructures extends JPanel{
 		nodesPainted = new HashMap<Integer, Boolean>();
 		labelStructures = new JLabel("Graph");
 		labelStructures.setFont(new Font("Tw Cen MT", Font.PLAIN, 24));
-		this.add(labelStructures);	
+		this.add(labelStructures);
 	}
-	
+
 	public Node<Point, Integer> getNodeToPaint() {
 		return nodeToPaint2;
 	}
@@ -58,26 +58,23 @@ public class PanelStructures extends JPanel{
 	public void setLinesToPaint(HashMap<Integer, EdgeSrcEnd<Integer>> linesToPaint) {
 		this.linesToPaint = linesToPaint;
 	}
-	
+
 	public void fill() {
-		if(nodesToPaint != null && linesToPaint != null) {
-			for(Node<Point, Integer> node : nodesToPaint.values()) {
+		if (nodesToPaint != null && linesToPaint != null) {
+			for (Node<Point, Integer> node : nodesToPaint.values()) {
 				nodesPainted.put(node.getKey(), false);
-			}			
+			}
 		}
-		
+
 	}
-	
 
 	public Color getColor() {
 		return color;
 	}
 
-
 	public void setColor(Color color) {
 		this.color = color;
 	}
-
 
 	public void paintComponent(Graphics g) {
 		
@@ -93,14 +90,27 @@ public class PanelStructures extends JPanel{
 					g.drawString(nodeToPaint.getKey() + "", nodeToPaint.getValue().getxPosition() , nodeToPaint.getValue().getyPosition());
 					g.setColor(color);
 					for(EdgeSrcEnd<Integer> edge : linesToPaint.values()) {
-						int xSource = nodesToPaint.get(edge.getSrc().getKey()).getValue().getxPosition() + nodesToPaint.get(edge.getSrc().getKey()).getValue().getRadius() / 2; 
-						int xEnd = nodesToPaint.get(edge.getEnd().getKey()).getValue().getxPosition() + nodesToPaint.get(edge.getSrc().getKey()).getValue().getRadius() / 2;
-						int ySource =  nodesToPaint.get(edge.getSrc().getKey()).getValue().getyPosition() + nodesToPaint.get(edge.getSrc().getKey()).getValue().getRadius() / 2;
-						int yEnd = nodesToPaint.get(edge.getEnd().getKey()).getValue().getyPosition() + nodesToPaint.get(edge.getSrc().getKey()).getValue().getRadius() / 2;
-						g.drawLine(xSource, ySource, xEnd, yEnd);
-						g.setColor(Color.BLACK);
-						g.setFont(new Font("Tw Cen MT", Font.PLAIN, 14));
-						g.drawString(edge.getWeightKey() + "", (xSource + xEnd)/2 , (yEnd + ySource) / 2 );
+						if(nodesPainted.get(edge.getSrc().getKey()) && nodesPainted.get(edge.getEnd().getKey())) {
+							int xSource = nodesToPaint.get(edge.getSrc().getKey()).getValue().getxPosition() + nodesToPaint.get(edge.getSrc().getKey()).getValue().getRadius() / 2; 
+							int xEnd = nodesToPaint.get(edge.getEnd().getKey()).getValue().getxPosition() + nodesToPaint.get(edge.getSrc().getKey()).getValue().getRadius() / 2;
+							int ySource =  nodesToPaint.get(edge.getSrc().getKey()).getValue().getyPosition() + nodesToPaint.get(edge.getSrc().getKey()).getValue().getRadius() / 2;
+							int yEnd = nodesToPaint.get(edge.getEnd().getKey()).getValue().getyPosition() + nodesToPaint.get(edge.getSrc().getKey()).getValue().getRadius() / 2;
+							g.setColor(Color.WHITE);
+							g.drawArc(xSource, ySource, xEnd, yEnd, 0, 180);
+						}
+						else {
+							g.setColor(color);
+							int xSource = nodesToPaint.get(edge.getSrc().getKey()).getValue().getxPosition() + nodesToPaint.get(edge.getSrc().getKey()).getValue().getRadius() / 2; 
+							int xEnd = nodesToPaint.get(edge.getEnd().getKey()).getValue().getxPosition() + nodesToPaint.get(edge.getSrc().getKey()).getValue().getRadius() / 2;
+							int ySource =  nodesToPaint.get(edge.getSrc().getKey()).getValue().getyPosition() + nodesToPaint.get(edge.getSrc().getKey()).getValue().getRadius() / 2;
+							int yEnd = nodesToPaint.get(edge.getEnd().getKey()).getValue().getyPosition() + nodesToPaint.get(edge.getSrc().getKey()).getValue().getRadius() / 2;
+							nodesPainted.put((Integer)edge.getSrc().getKey(), true);
+							nodesPainted.put((Integer)edge.getEnd().getKey(), true);
+							g.drawLine(xSource, ySource, xEnd, yEnd);
+							g.setColor(Color.BLACK);
+							g.setFont(new Font("Tw Cen MT", Font.PLAIN, 14));
+							g.drawString(edge.getWeightKey() + "", (xSource + xEnd)/2 , (yEnd + ySource) / 2 );
+						}
 					}
 					if(route.size() != 0) {
 						for(int i = 0; i < route.size() ; i ++) {
@@ -184,7 +194,7 @@ public class PanelStructures extends JPanel{
 		}
 
 	}
-	
+
 	public ArrayList<Node<Point, Integer>> getRoute() {
 		return route;
 	}
@@ -201,7 +211,4 @@ public class PanelStructures extends JPanel{
 		this.nodesToPaint = nodesToPaint;
 	}
 
-
-
-		
 }

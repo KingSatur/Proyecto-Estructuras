@@ -1,5 +1,8 @@
-/graph/
-/threads/
-/model/
-/graphicInterface/
 /Interface/
+/UnitaryTest/
+/dataStructures/
+/graph/
+/graphicInterface/
+/model/
+/tda/
+/threads/
