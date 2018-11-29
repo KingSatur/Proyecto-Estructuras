@@ -2,6 +2,7 @@ package graphicInterface;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JButton;
@@ -30,10 +31,10 @@ public class DialogSimpleDirected extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public DialogSimpleDirected(Main main, HashMap<Integer, Node<Point, Integer>> nodes, EdgeSrcEnd<Integer>[][] matrix) {
+	public DialogSimpleDirected(Main main, HashMap<Integer, Node<Point, Integer>> nodes, EdgeSrcEnd<Integer>[][] matrix, ArrayList<Integer> path) {
 		
 		this.main =  main;
-		panelSimpleDirected = new PanelSimpleDirected(main, nodes, matrix);
+		panelSimpleDirected = new PanelSimpleDirected(main, nodes, matrix, path);
 		getContentPane().add(panelSimpleDirected);
 		setSize(ANCHO, ALTO);
 		JLabel lblNewLabel = new JLabel("Simple Dirigido");

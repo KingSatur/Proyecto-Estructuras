@@ -2,6 +2,7 @@ package graphicInterface;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JButton;
@@ -24,8 +25,8 @@ public class DialogSimpleUndirected extends JDialog {
 	private PanelSimpleUndirected panelSimpleUndirectedDirected;
 	private Main main;
 	
-	public DialogSimpleUndirected(Main main, HashMap<Integer, Node<Point, Integer>> nodes, EdgeSrcEnd<Integer>[][] matrix) {
-		panelSimpleUndirectedDirected = new PanelSimpleUndirected(main, nodes, matrix);
+	public DialogSimpleUndirected(Main main, HashMap<Integer, Node<Point, Integer>> nodes, EdgeSrcEnd<Integer>[][] matrix, ArrayList<Integer> path) {
+		panelSimpleUndirectedDirected = new PanelSimpleUndirected(main, nodes, matrix, path);
 		this.main = main;
 		
 		setSize(ANCHO, ALTO);
@@ -42,8 +43,6 @@ public class DialogSimpleUndirected extends JDialog {
 		return panelSimpleUndirectedDirected;
 	}
 
-	
-	
 	
 
 }

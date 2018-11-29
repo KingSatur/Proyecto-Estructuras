@@ -11,6 +11,9 @@ import java.util.Stack;
 import javax.swing.JEditorPane;
 
 import Interface.iGraphMatrix;
+import dataStructures.Abstract;
+import tda.InterfaceCampiQueue;
+import tda.InterfaceCampiStack;
 
 
 public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> implements iGraphMatrix<V, K> {
@@ -25,8 +28,8 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 	protected HashMap<K, K> fathers;
 	
 	//dfs y bfs
-	protected Stack<K> stack;
-	protected Queue<K> queue;
+	protected InterfaceCampiStack<K> stack;
+	protected InterfaceCampiQueue<pathFathers<K>> queue;
 	
 	
 	//Dijkstra
@@ -81,13 +84,7 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 	}
 
 
-	public Stack<K> getStack() {
-		return stack;
-	}
 
-	public Queue<K> getQueue() {
-		return queue;
-	}
 
 	public double[] getDistance() {
 		return distance;
@@ -223,12 +220,11 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 	@Override
 	public HashMap<K, K> dfs(K keyNode) {
 
-		path.clear();
-		pathEdges = new HashMap<>();
+		path = new ArrayList<>();
 		visited = new boolean[matrix.length];
 		fathers = new HashMap<K, K>(matrix.length);
-		stack = new Stack<K>();
-		stack.add(keyNode);
+		stack = new Abstract<K>();
+		stack.push(keyNode);
 		fathers.put(keyNode, keyNode);
 
 		while (!stack.isEmpty()) {
@@ -239,7 +235,7 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 					if (matrix[indexNodes.get(key)][j].getWeightKey() != Double.MAX_VALUE && matrix[indexNodes.get(key)][j].getWeightKey() != 0.0) {
 						K keyNeighbor = keysNodes.get(j);
 						if (!visited[j]) {
-							stack.add(keyNeighbor);
+							stack.push(keyNeighbor);
 							fathers.put(keyNeighbor, key);
 						}
 					}
@@ -255,24 +251,29 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 		path.clear();
 		visited = new boolean[matrix.length];
 		fathers = new HashMap<K, K>(matrix.length);
-		queue = new LinkedList<K>();
-		queue.add(keyNode);
+		queue = new Abstract<pathFathers<K>>();
+		
+		
+		queue.enqueue(new pathFathers<K>(keyNode, keyNode));
 		fathers.put(keyNode, keyNode);
 		while (!queue.isEmpty()) {
-			K key = queue.remove();
-			if(!visited[indexNodes.get(key)]) {
-				path.add(key);
+			pathFathers key = queue.dequeue();
+			if(!visited[indexNodes.get(key.getKeyNode())]) {
+				path.add((K) key.getKeyNode());
+				fathers.put((K)key.getKeyNode(), (K)key.getKeyFather());
+				
+				visited[indexNodes.get(key.getKeyNode())] = true;
 				for (int j = 0; j < matrix.length; j++) {
-					if (matrix[indexNodes.get(key)][j].getWeightKey() < Double.MAX_VALUE
-							&& matrix[indexNodes.get(key)][j].getWeightKey() != 0.0) {
+					if (matrix[indexNodes.get(key.getKeyNode())][j].getWeightKey() < Double.MAX_VALUE
+							&& matrix[indexNodes.get(key.getKeyNode())][j].getWeightKey() != 0.0) {
 						K keyNeighbor = keysNodes.get(j);
 						if (!visited[j]) {
-							queue.add(keyNeighbor);
-							fathers.put(keyNeighbor, key);
+							queue.enqueue(new pathFathers<K>((K)keyNeighbor,(K) key.getKeyNode()));
+//							fathers.put(keyNeighbor, key);
 						}
 					}
 				}
-				visited[indexNodes.get(key)] = true;
+//				visited[indexNodes.get(key)] = true;
 			}
 		}
 		return fathers;
@@ -424,6 +425,35 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 			System.out.println();
 		}
 	}
+	
+	
+	static class pathFathers<K>{
+		
+		private K keyNode;
+		private K keyFather;
+		
+		public pathFathers(K keyNode, K keyFather) {
+			this.keyNode = keyNode;
+			this.keyFather = keyFather;
+		}
+
+		public K getKeyNode() {
+			return keyNode;
+		}
+
+		public void setKeyNode(K keyNode) {
+			this.keyNode = keyNode;
+		}
+
+		public K getKeyFather() {
+			return keyFather;
+		}
+
+		public void setKeyFather(K keyFather) {
+			this.keyFather = keyFather;
+		}
+		
+	}
 
 	public static void main(String[] args) {
 //		AdjacencyMatrix<Integer, Integer> adjM = new AdjacencyMatrix<>();
@@ -454,28 +484,28 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 		Node<Integer,Integer> n1 = new Node<Integer,Integer>(1,1);
 		Node<Integer,Integer> n2 = new Node<Integer,Integer>(2,2);
 		Node<Integer,Integer> n3 = new Node<Integer,Integer>(3,3);
-		Node<Integer,Integer> n4 = new Node<Integer,Integer>(4,4);
-		Node<Integer,Integer> n5 = new Node<Integer, Integer>(5,5);
+//		Node<Integer,Integer> n4 = new Node<Integer,Integer>(4,4);
+//		Node<Integer,Integer> n5 = new Node<Integer, Integer>(5,5);
 		graphMatrix.addNode(n1);
 		graphMatrix.addNode(n2);
 		graphMatrix.addNode(n3);
-		graphMatrix.addNode(n4);
-		graphMatrix.addNode(n5);
+//		graphMatrix.addNode(n4);
+//		graphMatrix.addNode(n5);
 		
-		graphMatrix.addEdge(1, 2, 1, 1);
-		graphMatrix.addEdge(1, 5, 2, 21);
-		graphMatrix.addEdge(2, 5, 3, 80);
-		graphMatrix.addEdge(2, 4, 5, 5);
-		graphMatrix.addEdge(3, 2, 7, 40);
-		graphMatrix.addEdge(3, 1, 37, 60);
-		graphMatrix.addEdge(4, 1, 2, 30);
-		graphMatrix.addEdge(4, 3, 19, 70);
-		graphMatrix.addEdge(5, 4, 13, 4);
-		graphMatrix.addEdge(5, 3, 6, 3);	
+//		graphMatrix.addEdge(1, 2, 1, 1);
+//		graphMatrix.addEdge(1, 5, 2, 21);
+//		graphMatrix.addEdge(2, 5, 3, 80);
+//		graphMatrix.addEdge(2, 4, 5, 5);
+//		graphMatrix.addEdge(3, 2, 7, 40);
+//		graphMatrix.addEdge(3, 1, 37, 60);
+//		graphMatrix.addEdge(4, 1, 2, 30);
+//		graphMatrix.addEdge(4, 3, 19, 70);
+//		graphMatrix.addEdge(5, 4, 13, 4);
+//		graphMatrix.addEdge(5, 3, 6, 3);	
 
-//		adjM.addEdge(1, 2, 7, 1);
-//		adjM.addEdge(2, 3, 3, 2);
-//		adjM.addEdge(3, 4, 2, 3);
+		graphMatrix.addEdge(1, 2, 7, 1);
+		graphMatrix.addEdge(2, 3, 3, 2);
+		graphMatrix.addEdge(3, 1, 2, 3);
 //		adjM.addEdge(4, 1, 1, 4);
 //		adjM.addEdge(3, 5, 4, 5);
 //		adjM.addEdge(5, 1, 6, 7);
@@ -484,7 +514,7 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 
 		graphMatrix.imprimir();
 
-		//Prueba para dfs y bfs
+//		Prueba para dfs y bfs
 //		HashMap<Integer, Integer> n = graphMatrix.bfs(1);
 //		for (Integer k : n.keySet()) {
 //			System.out.print(k + "," + n.get(k)+ " | ");
@@ -506,17 +536,17 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 		
 		
 		// Prueba para Floyd Warshall
-		EdgeSrcEnd[][] matrixClone = graphMatrix.floydWarshall();
-		for (int i = 0; i < matrixClone.length; i++) {
-			for (int j = 0; j < matrixClone.length; j++) {
-				if (matrixClone[i][j].getWeightKey() != Double.MAX_VALUE  ) {
-					System.out.print("|   " + matrixClone[i][j].getWeightKey() +  "   |");
-				} else {
-					System.out.print("|" + "   -   " + "|");
-				}
-			}
-			System.out.println();
-		}
+//		EdgeSrcEnd[][] matrixClone = graphMatrix.floydWarshall();
+//		for (int i = 0; i < matrixClone.length; i++) {
+//			for (int j = 0; j < matrixClone.length; j++) {
+//				if (matrixClone[i][j].getWeightKey() != Double.MAX_VALUE  ) {
+//					System.out.print("|   " + matrixClone[i][j].getWeightKey() +  "   |");
+//				} else {
+//					System.out.print("|" + "   -   " + "|");
+//				}
+//			}
+//			System.out.println();
+//		}
 
 		// Prueba para prim
 //		HashMap<Integer, Integer> hash = adjM.prim();
@@ -527,10 +557,12 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 //		System.out.println(adjM.weightPath);
 
 //		Prueba Kruskal
-//		HashMap<Integer, Integer> answer= graphMatrix.kruscal();
-//		for (Integer k : answer.keySet()) {
-//			System.out.print(k + "," + answer.get(k)+ " | ");
-//		}
+		HashMap<Integer, Integer> answer= graphMatrix.kruscal();
+		for (Integer k : answer.keySet()) {
+			System.out.print(k + "," + answer.get(k)+ " | ");
+		}
+		
+		
 		
 		
 		

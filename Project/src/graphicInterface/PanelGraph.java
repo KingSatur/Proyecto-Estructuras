@@ -19,7 +19,7 @@ public class PanelGraph extends JPanel{
 	
 	public PanelGraph(Main main) {
 		this.main = main;
-		labelGraph = new JLabel();
+		labelGraph = new JLabel("Structures");
 		labelGraph.setFont(new Font("Tw Cen MT", Font.PLAIN, 24));
 		labelGraph.setForeground(Color.BLACK);
 		labelGraph.setBounds(80, 11, 140, 27);
@@ -29,7 +29,7 @@ public class PanelGraph extends JPanel{
 		this.setVisible(true);
 		this.setBounds(293, 11, 502, 415);
 		this.setLocation(10, 11);
-		this.setBackground(Color.WHITE);
+		this.setBackground(Color.RED);
 		this.setSize(new Dimension(273, 415));
 	}
 

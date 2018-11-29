@@ -3,6 +3,7 @@ package graphicInterface;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.GridLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -216,7 +217,7 @@ public class Main extends JFrame implements ActionListener {
 		if (e.getSource().equals(btnSimpleDirected)) {
 			modelGraphs.createSimpleGraph();
 			dSimpleDirected = new DialogSimpleDirected(this, modelGraphs.getSimpleDirectedGraph().getNodes(),
-			modelGraphs.getSimpleDirectedGraph().getMatrix());
+			modelGraphs.getSimpleDirectedGraph().getMatrix(),  modelGraphs.getSimpleDirectedGraph().getPath());
 			dSimpleDirected.setVisible(true);
 			dSimpleDirected.setLocationRelativeTo(this);
 			simplreDirected = true;
@@ -227,7 +228,7 @@ public class Main extends JFrame implements ActionListener {
 		if (e.getSource().equals(btnSimpleUndirected)) {
 			modelGraphs.createSimpleUndirectedGraph();
 			dSimpleUndirected = new DialogSimpleUndirected(this, modelGraphs.getSimpleUndirectedGraph().getNodes(),
-			modelGraphs.getSimpleUndirectedGraph().getMatrix());
+			modelGraphs.getSimpleUndirectedGraph().getMatrix(), modelGraphs.getSimpleUndirectedGraph().getPath() );
 			dSimpleUndirected.setVisible(true);
 			dSimpleUndirected.setLocationRelativeTo(null);
 			simplreDirected = false;
@@ -250,17 +251,21 @@ public class Main extends JFrame implements ActionListener {
 
 		if (simplreDirected) {
 			modelGraphs.getSimpleDirectedGraph().bfs(k);
-			paint paint = new paint(dSimpleDirected.getPanelSimpleDirected().getPanelCanvas(),
+			paintNodes paint = new paintNodes(dSimpleDirected.getPanelSimpleDirected().getPanelCanvas(),
 					modelGraphs.getSimpleDirectedGraph().getPath(), modelGraphs.getSimpleDirectedGraph().getNodes(),
 					modelGraphs.getSimpleDirectedGraph().getFathers());
 			paint.start();
 		}
 		if(simpleUndirected) {
 			modelGraphs.getSimpleUndirectedGraph().bfs(k);
-			paint paint2 = new paint(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(),
+			paintNodes paint2 = new paintNodes(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(),
 					modelGraphs.getSimpleUndirectedGraph().getPath(), modelGraphs.getSimpleUndirectedGraph().getNodes(),
 					modelGraphs.getSimpleUndirectedGraph().getFathers());
 			paint2.start();
+			
+			paintEdges paintEdges = new paintEdges(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(), modelGraphs.getSimpleUndirectedGraph().getFathers(),
+					modelGraphs.getSimpleUndirectedGraph().getPath(), simplreDirected, false);
+			paintEdges.start();
 			
 		}
 		if(MultiGraph) {
@@ -283,19 +288,24 @@ public class Main extends JFrame implements ActionListener {
 	}
 
 	public void dfs(Integer k) {
-		if (simplreDirected) {
+			if (simplreDirected) {
 			modelGraphs.getSimpleDirectedGraph().dfs(k);
-			paint paint = new paint(dSimpleDirected.getPanelSimpleDirected().getPanelCanvas(),
+			paintNodes paint = new paintNodes(dSimpleDirected.getPanelSimpleDirected().getPanelCanvas(),
 					modelGraphs.getSimpleDirectedGraph().getPath(), modelGraphs.getSimpleDirectedGraph().getNodes(),
 					modelGraphs.getSimpleDirectedGraph().getFathers());
 			paint.start();
 		}
 		if(simpleUndirected) {
 			modelGraphs.getSimpleUndirectedGraph().dfs(k);
-			paint paint2 = new paint(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(),
+			paintNodes paint2 = new paintNodes(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(),
 					modelGraphs.getSimpleUndirectedGraph().getPath(), modelGraphs.getSimpleUndirectedGraph().getNodes(),
 					modelGraphs.getSimpleUndirectedGraph().getFathers());
 			paint2.start();
+			
+			paintEdges paintEdges = new paintEdges(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(), modelGraphs.getSimpleUndirectedGraph().getFathers(),
+					modelGraphs.getSimpleUndirectedGraph().getPath(), simplreDirected, false);
+			paintEdges.start();
+			
 			
 		}
 //		if(MultiGraph) {
@@ -319,7 +329,7 @@ public class Main extends JFrame implements ActionListener {
 		
 		if (simplreDirected) {
 			modelGraphs.getSimpleDirectedGraph().dijsktra(k);
-			paint paint = new paint(dSimpleDirected.getPanelSimpleDirected().getPanelCanvas(),
+			paintNodes paint = new paintNodes(dSimpleDirected.getPanelSimpleDirected().getPanelCanvas(),
 					modelGraphs.getSimpleDirectedGraph().getPath(), modelGraphs.getSimpleDirectedGraph().getNodes(),
 					modelGraphs.getSimpleDirectedGraph().getFathers());
 			paint.start();
@@ -328,10 +338,14 @@ public class Main extends JFrame implements ActionListener {
 
 		if(simpleUndirected) {
 			modelGraphs.getSimpleUndirectedGraph().dijsktra(k);
-			paint paint2 = new paint(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(),
+			paintNodes paint2 = new paintNodes(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(),
 					modelGraphs.getSimpleUndirectedGraph().getPath(), modelGraphs.getSimpleUndirectedGraph().getNodes(),
 					modelGraphs.getSimpleUndirectedGraph().getFathers());
 			paint2.start();
+			
+			paintEdges paintEdges = new paintEdges(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(), modelGraphs.getSimpleUndirectedGraph().getFathers(),
+					modelGraphs.getSimpleUndirectedGraph().getPath(), simplreDirected, false);
+			paintEdges.start();
 			
 		}
 			
@@ -362,40 +376,104 @@ public class Main extends JFrame implements ActionListener {
 	public void floydWarshall() {
 		if (simplreDirected) {
 			modelGraphs.getSimpleDirectedGraph().floydWarshall();
-			paint paint = new paint(dSimpleDirected.getPanelSimpleDirected().getPanelCanvas(),
-					modelGraphs.getSimpleDirectedGraph().getPath(), modelGraphs.getSimpleDirectedGraph().getNodes(),
-					modelGraphs.getSimpleDirectedGraph().getFathers());
-			paint.start();
+			
+			JDialog dialogMatrix = new JDialog(dSimpleUndirected, "Matriz de pesos");
+			dialogMatrix.getContentPane().setLayout(new GridLayout(modelGraphs.getSimpleDirectedGraph().getMatrix().length, modelGraphs.getSimpleDirectedGraph().getMatrix().length));
+			dialogMatrix.setSize(400, 400);
+			
+			JPanel panel = new JPanel();
+			
+			panel.setLayout(new GridLayout(modelGraphs.getSimpleDirectedGraph().getMatrix().length, modelGraphs.getSimpleDirectedGraph().getMatrix().length));
+			
+			for (int i = 0; i < modelGraphs.getSimpleDirectedGraph().getMatrix().length; i++) {
+				for (int j = 0; j < modelGraphs.getSimpleDirectedGraph().getMatrix().length; j++) {
+					
+					JLabel label = new JLabel(  (int)modelGraphs.getSimpleDirectedGraph().getMatrix()[i][j].getWeightKey()  + "");
+					label.setHorizontalAlignment(SwingConstants.CENTER);
+					if(modelGraphs.getSimpleDirectedGraph().getMatrix()[i][j].getWeightKey() != Double.MAX_VALUE) {
+						panel.add( label);
+					}else {
+						
+						JLabel label2 = new JLabel(" - ");
+						label2.setHorizontalAlignment(SwingConstants.CENTER);
+						panel.add(label2);
+					}
+				}
+			}
+			
+			dialogMatrix.getContentPane().setLayout(new BorderLayout());
+			dialogMatrix.getContentPane().add(panel, BorderLayout.CENTER);
+			dialogMatrix.setVisible(true);
+			dialogMatrix.setLocationRelativeTo(this);
+			
+			
+		
 		}
 			
-
 		if(simpleUndirected) {
 			modelGraphs.getSimpleUndirectedGraph().floydWarshall();
-			paint paint2 = new paint(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(),
-					modelGraphs.getSimpleUndirectedGraph().getPath(), modelGraphs.getSimpleUndirectedGraph().getNodes(),
-					modelGraphs.getSimpleUndirectedGraph().getFathers());
-			paint2.start();
+		
+			JDialog dialogMatrix = new JDialog(dSimpleUndirected, "Matriz de pesos");
+			dialogMatrix.getContentPane().setLayout(new GridLayout(modelGraphs.getSimpleUndirectedGraph().getMatrix().length, modelGraphs.getSimpleUndirectedGraph().getMatrix().length));
+			dialogMatrix.setSize(400, 400);
+			
+			JPanel panel = new JPanel();
+			
+			panel.setLayout(new GridLayout(modelGraphs.getSimpleUndirectedGraph().getMatrix().length, modelGraphs.getSimpleUndirectedGraph().getMatrix().length));
+			
+			for (int i = 0; i < modelGraphs.getSimpleUndirectedGraph().getMatrix().length; i++) {
+				for (int j = 0; j < modelGraphs.getSimpleUndirectedGraph().getMatrix().length; j++) {
+					
+					JLabel label = new JLabel(  (int)modelGraphs.getSimpleUndirectedGraph().getMatrix()[i][j].getWeightKey()  + "");
+					label.setHorizontalAlignment(SwingConstants.CENTER);
+					if(modelGraphs.getSimpleUndirectedGraph().getMatrix()[i][j].getWeightKey() != Double.MAX_VALUE) {
+						panel.add( label);
+					}else {
+						
+						JLabel label2 = new JLabel(" - ");
+						label2.setHorizontalAlignment(SwingConstants.CENTER);
+						panel.add(label2);
+					}
+				}
+			}
+			
+			dialogMatrix.getContentPane().setLayout(new BorderLayout());
+			dialogMatrix.getContentPane().add(panel, BorderLayout.CENTER);
+			dialogMatrix.setVisible(true);
+			dialogMatrix.setLocationRelativeTo(this);
+			
+			
 			
 		}
+			
 			
 	}
 	
 	public void kruskal() {
-		if (simplreDirected) {
+	if (simplreDirected) {
 			modelGraphs.getSimpleDirectedGraph().kruscal();
-			paint paint = new paint(dSimpleDirected.getPanelSimpleDirected().getPanelCanvas(),
+			paintNodes paint = new paintNodes(dSimpleDirected.getPanelSimpleDirected().getPanelCanvas(),
 					modelGraphs.getSimpleDirectedGraph().getPath(), modelGraphs.getSimpleDirectedGraph().getNodes(),
 					modelGraphs.getSimpleDirectedGraph().getFathers());
 			paint.start();
+			
+			
+			paintEdges paintEdges = new paintEdges(dSimpleDirected.getPanelSimpleDirected().getPanelCanvas(), modelGraphs.getSimpleDirectedGraph().getFathers(),
+					modelGraphs.getSimpleDirectedGraph().getPath(), simplreDirected, true);
+			paintEdges.start();
 		}
 			
 
 		if(simpleUndirected) {
 			modelGraphs.getSimpleUndirectedGraph().kruscal();
-			paint paint2 = new paint(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(),
+			paintNodes paint2 = new paintNodes(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(),
 					modelGraphs.getSimpleUndirectedGraph().getPath(), modelGraphs.getSimpleUndirectedGraph().getNodes(),
 					modelGraphs.getSimpleUndirectedGraph().getFathers());
 			paint2.start();
+			
+			paintEdges paintEdges = new paintEdges(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(), modelGraphs.getSimpleUndirectedGraph().getFathers(),
+					modelGraphs.getSimpleUndirectedGraph().getPath(), simplreDirected, true);
+			paintEdges.start();
 			
 		}
 			
@@ -420,9 +498,9 @@ public class Main extends JFrame implements ActionListener {
 	}
 
 	public void prim() {
-		if (simplreDirected) {
+	if (simplreDirected) {
 			modelGraphs.getSimpleDirectedGraph().prim();
-			paint paint = new paint(dSimpleDirected.getPanelSimpleDirected().getPanelCanvas(),
+			paintNodes paint = new paintNodes(dSimpleDirected.getPanelSimpleDirected().getPanelCanvas(),
 					modelGraphs.getSimpleDirectedGraph().getPath(), modelGraphs.getSimpleDirectedGraph().getNodes(),
 					modelGraphs.getSimpleDirectedGraph().getFathers());
 			paint.start();
@@ -431,10 +509,14 @@ public class Main extends JFrame implements ActionListener {
 
 		if(simpleUndirected) {
 			modelGraphs.getSimpleUndirectedGraph().prim();
-			paint paint2 = new paint(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(),
+			paintNodes paint2 = new paintNodes(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(),
 					modelGraphs.getSimpleUndirectedGraph().getPath(), modelGraphs.getSimpleUndirectedGraph().getNodes(),
 					modelGraphs.getSimpleUndirectedGraph().getFathers());
 			paint2.start();
+			
+			paintEdges paintEdges = new paintEdges(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(), modelGraphs.getSimpleUndirectedGraph().getFathers(),
+					modelGraphs.getSimpleUndirectedGraph().getPath(), simplreDirected, false);
+			paintEdges.start();
 			
 		}
 			

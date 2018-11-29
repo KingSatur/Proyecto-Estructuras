@@ -13,6 +13,7 @@ import java.awt.Dimension;
 
 import javax.swing.JButton;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JLabel;
@@ -34,11 +35,11 @@ public class PanelSimpleDirected extends JPanel {
 //	private FlowLayout flowLayout = (FlowLayout) panelStructure.getLayout();
 //	private JLabel lblStructure = new JLabel("Structure");
 
-	public PanelSimpleDirected(Main main, HashMap<Integer, Node<Point, Integer>> nodes, EdgeSrcEnd<Integer>[][] matrix ) {
+	public PanelSimpleDirected(Main main, HashMap<Integer, Node<Point, Integer>> nodes, EdgeSrcEnd<Integer>[][] matrix , ArrayList<Integer> path) {
 		
 		this.main = main;
 		setLayout(new BorderLayout());
-		panelCanvas = new PanelCanvasMatrix(main, nodes, matrix);
+		panelCanvas = new PanelCanvasMatrix(main, nodes, matrix, path);
 		add(panelCanvas, BorderLayout.CENTER);
 //		setBackground(Color.LIGHT_GRAY);
 //		setLayout(new BorderLayout(0, 0));

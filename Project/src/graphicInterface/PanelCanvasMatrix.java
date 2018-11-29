@@ -33,7 +33,10 @@ public class PanelCanvasMatrix extends JPanel implements ActionListener {
 	private HashMap<Integer, Point> pointsRed;
 
 	private HashMap<Integer, Node<Point, Integer>> nodes;
+	private int[][] matrixRelation;
 	private EdgeSrcEnd<Integer>[][] matrix;
+		
+	private ArrayList<Integer> path;
 
 	private JButton btnBfs;
 	private JButton btnDijkstra;
@@ -43,7 +46,18 @@ public class PanelCanvasMatrix extends JPanel implements ActionListener {
 	private JLabel lblGrafo;
 	private JButton btnDfs;
 
-	public PanelCanvasMatrix(Main main, HashMap<Integer, Node<Point, Integer>> nodes, EdgeSrcEnd<Integer>[][] matrix) {
+	public PanelCanvasMatrix(Main main, HashMap<Integer, Node<Point, Integer>> nodes, EdgeSrcEnd<Integer>[][] matrix, ArrayList<Integer> path) {
+				
+		this.nodes = (HashMap<Integer, Node<Point, Integer>>) nodes.clone();
+		
+		this.path = path;
+		this.main = main;
+		this.matrix = matrix.clone(); 
+		
+		this.matrixRelation = new int[matrix.length][matrix.length];
+		
+		
+		
 		btnDfs = new JButton("dfs");
 		btnBfs = new JButton("bfs");
 		lblGrafo = new JLabel("Grafo");
@@ -52,9 +66,6 @@ public class PanelCanvasMatrix extends JPanel implements ActionListener {
 		btnPrim = new JButton("Prim");
 		btnKruskal = new JButton("Kruskal");
 
-		this.nodes = nodes;
-		this.main = main;
-		this.matrix = matrix;
 		setLayout(null);
 		pointsRed = new HashMap<>();
 		lblGrafo.setBounds(499, 65, 46, 14);
@@ -84,12 +95,20 @@ public class PanelCanvasMatrix extends JPanel implements ActionListener {
 		btnKruskal.addActionListener(this);
 		btnPrim.addActionListener(this);
 		
-		
+	}
 
+	public HashMap<Integer, Node<Point, Integer>> getNodes() {
+		return nodes;
+	}
+	
+	public int[][] getMatrix() {
+		return matrixRelation;
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
+		
+		
 		super.paintComponent(g);
 
 		int x = 0;
@@ -108,73 +127,43 @@ public class PanelCanvasMatrix extends JPanel implements ActionListener {
 			
 			x++;
 		}
-
-		int z = 0;
-
-		if (pointsRed.size() == nodes.size()) {
-
-			for (Integer k : pointsRed.keySet()) {
-
-				System.out.println(pointsRed.get(k).getxPosition() +"  "+  (pointsRed.get(k).getyPosition()));
+		
+		
+		for (int i = 0; i < matrixRelation.length; i++) {
+			for (int j = 0; j < matrixRelation.length; j++) {
 				
-				if ((z + 1) < pointsRed.size()) {
-					Point p1 = pointsRed.get(z);
-					Point p2 = pointsRed.get(z + 1);
-
-					int x1 = p1.getxPosition();
-					int y1 = p1.getyPosition();
-					int x2 = p2.getxPosition();
-					int y2 = p2.getyPosition();
-					int r = p2.getRadius();
-
+				if(matrixRelation[i][j] == 1) {
 					g.setColor(Color.RED);
-					g.drawLine(x1 + r, y1 + r, x2 + r, y2 + r);
-					
+					System.out.println("arista");
+				}else {
+					g.setColor(Color.BLACK);
 				}
-				z++;
+				
+				Point p1 = ((Point) matrix[i][j].getSrc().getValue());
+				Point p2 = ((Point) matrix[i][j].getEnd().getValue());
+
+				
+				
+				int x1 = p1.getxPosition();
+				int y1 = p1.getyPosition();
+				int x2 = p2.getxPosition();
+				int y2 = p2.getyPosition();
+				int r = p2.getRadius();
+				g.drawLine(x1 + r, y1 + r, x2 + r, y2 + r);
+				g.setColor(Color.BLACK);
+				g.drawString(matrix[i][j].getWeightKey()+"", (x1+x2)/2, (y1+y2)/2);
 			}
-		} else {
 
-			for (int i = 0; i < matrix.length; i++) {
-				for (int j = 0; j < matrix.length; j++) {
-					if (matrix[i][j].getWeightKey() != Double.MAX_VALUE  &&  matrix[i][j].getWeightKey() != 0.0) {
-
-						Point p1 = ((Point) matrix[i][j].getSrc().getValue());
-						Point p2 = ((Point) matrix[i][j].getEnd().getValue());
-
-						int x1 = p1.getxPosition();
-						int y1 = p1.getyPosition();
-						int x2 = p2.getxPosition();
-						int y2 = p2.getyPosition();
-						int r = p2.getRadius();
-						g.setColor(Color.BLACK);
-						g.drawLine(x1 + r, y1 + r, x2 + r, y2 + r);
-						g.drawString(matrix[i][j].getWeightKey()+"", (x1+x2)/2, (y1+y2)/2);
-
-					}
-				}
-			}
-			
-			
 		}
 		
-		for (int i = 0; i < matrix.length; i++) {
-			for (int j = 0; j < matrix.length; j++) {
-				if (matrix[i][j].getWeightKey() != Double.MAX_VALUE  &&  matrix[i][j].getWeightKey() != 0.0) {
-					Point p1 = ((Point) matrix[i][j].getSrc().getValue());
-					Point p2 = ((Point) matrix[i][j].getEnd().getValue());
-
-					int x1 = p1.getxPosition();
-					int y1 = p1.getyPosition();
-					int x2 = p2.getxPosition();
-					int y2 = p2.getyPosition();
-					
-					g.drawString(matrix[i][j].getWeightKey()+"", (x1+x2)/2, (y1+y2)/2);
-				}
-			}
-		}
-
+		
+		
+		
+		
+		
 	}
+	
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

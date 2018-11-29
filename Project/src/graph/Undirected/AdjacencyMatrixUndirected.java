@@ -254,20 +254,24 @@ public class AdjacencyMatrixUndirected<V, K extends Comparable<K>> extends Adjac
 
 		adjM.imprimir();
 
-//		HashMap<Integer, Integer> n = adjM.bfs(6);
-//		for (Integer k : n.keySet()) {
-//			System.out.print(k + "," + n.get(k)+ " | ");
-//		}
-
-		// Prueba para Dijsktra
-		HashMap<Integer, Integer> n = adjM.dijsktra(1);
+		HashMap<Integer, Integer> n = adjM.dfs(1);
 		for (Integer k : n.keySet()) {
-			System.out.print(k + "," + n.get(k) + " | ");
+			System.out.print(k + "," + n.get(k)+ " | ");
 		}
 		System.out.println();
 		for (int j = 0; j < adjM.path.size(); j++) {
 			System.out.print(adjM.path.get(j) + " | ");
 		}
+
+		// Prueba para Dijsktra
+//		HashMap<Integer, Integer> n = adjM.dijsktra(1);
+//		for (Integer k : n.keySet()) {
+//			System.out.print(k + "," + n.get(k) + " | ");
+//		}
+//		System.out.println();
+//		for (int j = 0; j < adjM.path.size(); j++) {
+//			System.out.print(adjM.path.get(j) + " | ");
+//		}
 		
 //		
 
