@@ -1,11 +1,9 @@
 package tda;
 
 import dataStructures.NodeAbstract;
-import exceptions.StackEmptyException;
 
 public interface InterfaceCampiStack<T> {
 
-	
 	public void push(T data);
 	
 	public boolean isEmpty();

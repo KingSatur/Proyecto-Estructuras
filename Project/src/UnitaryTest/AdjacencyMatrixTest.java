@@ -174,7 +174,7 @@ class AdjacencyMatrixTest {
 		graphMatrix.addEdge(1, 3, 1, 1);
 		i = graphMatrix.getIndexNodes().get(1);
 		j = graphMatrix.getIndexNodes().get(3);
-		test = graphMatrix.getMatrix()[i][j].equals(new EdgeSrcEnd<Integer>(n1, n3, 1, 1));
+		test = graphMatrix.getMatrix()[i][j].equals(new EdgeSrcEnd< Integer>(n1, n3, 1, 1));
 		
 
 		graphMatrix.addEdge(1, 2, 2, 2);

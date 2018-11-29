@@ -1,7 +1,5 @@
 package dataStructures;
 
-import exceptions.IndexOutOfRangeException;
-import exceptions.StackEmptyException;
 import tda.InterfaceCampiList;
 import tda.InterfaceCampiQueue;
 import tda.InterfaceCampiStack;
@@ -74,7 +72,7 @@ public class Abstract<T> implements InterfaceCampiList<T>, InterfaceCampiQueue<T
 	}
 
 	@Override
-	public void deleteElement(int position)throws IndexOutOfRangeException {
+	public void deleteElement(int position){
 		
 		if(position >= 0 && position < size) {
 			NodeAbstract<T> temporally = firstNode;
@@ -109,16 +107,11 @@ public class Abstract<T> implements InterfaceCampiList<T>, InterfaceCampiQueue<T
 				size--;
 			}
 		}
-		else {
-			throw new IndexOutOfRangeException("Posicion fuera del rango");
-		}
-		
-		
-		
+				
 	}
 
 	@Override
-	public NodeAbstract<T> searchElement(int position)throws IndexOutOfRangeException {
+	public NodeAbstract<T> searchElement(int position){
 	
 		NodeAbstract<T> toReturn = null;
  		
@@ -139,7 +132,7 @@ public class Abstract<T> implements InterfaceCampiList<T>, InterfaceCampiQueue<T
 			}
 		}
 		else {
-			throw new IndexOutOfRangeException("Posicion fuera del rango");
+			return null;
 		}
 		
 		

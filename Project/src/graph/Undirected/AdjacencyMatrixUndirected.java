@@ -14,18 +14,12 @@ import graph.Directed.UnionStructure;
 
 public class AdjacencyMatrixUndirected<V, K extends Comparable<K>> extends AdjacencyMatrix<V, K> {
 
-	// dijsktra
-	private HashMap<K, Integer> pathEdges;
+
+	
 
 	public AdjacencyMatrixUndirected() {
 		super();
 	}
-
-	public HashMap<K, Integer> getPathEdges() {
-		return pathEdges;
-	}
-	
-
 
 
 	@Override
@@ -228,22 +222,28 @@ public class AdjacencyMatrixUndirected<V, K extends Comparable<K>> extends Adjac
 		Node<Integer, Integer> n1 = new Node<>(1, 1);
 		Node<Integer, Integer> n2 = new Node<>(2, 2);
 		Node<Integer, Integer> n3 = new Node<>(3, 3);
-		Node<Integer, Integer> n4 = new Node<>(4, 4);
-		Node<Integer, Integer> n5 = new Node<>(5, 5);
-		Node<Integer, Integer> n6 = new Node<>(6, 6);
+//		Node<Integer, Integer> n4 = new Node<>(4, 4);
+//		Node<Integer, Integer> n5 = new Node<>(5, 5);
+//		Node<Integer, Integer> n6 = new Node<>(6, 6);
 		adjM.addNode(n1);
 		adjM.addNode(n2);
 		adjM.addNode(n3);
-		adjM.addNode(n4);
-		adjM.addNode(n5);
-		adjM.addNode(n6);
-		adjM.addEdge(1, 3, 1, 1);
-		adjM.addEdge(1, 2, 2, 2);
-		adjM.addEdge(3, 4, 3, 3);
-		adjM.addEdge(2, 4, 6, 4);
-		adjM.addEdge(4, 6, 2, 5);
-		adjM.addEdge(3, 5, 4, 6);
-		adjM.addEdge(5, 6, 2, 7);
+//		adjM.addNode(n4);
+//		adjM.addNode(n5);
+//		adjM.addNode(n6);
+		
+		
+//		simpleUndirectedGraph.addEdge(1, 2, 6, 1);
+//		simpleUndirectedGraph.addEdge(1, 3, 2, 2);
+//		simpleUndirectedGraph.addEdge(3, 2, 3, 3);
+		
+		adjM.addEdge(1, 2, 6, 1);
+		adjM.addEdge(1, 3, 2, 2);
+		adjM.addEdge(3, 2, 3, 3);
+//		adjM.addEdge(2, 4, 6, 4);
+//		adjM.addEdge(4, 6, 2, 5);
+//		adjM.addEdge(3, 5, 4, 6);
+//		adjM.addEdge(5, 6, 2, 7);
 //		adjM.addEdge(1, 2, 7, 1);
 //		adjM.addEdge(2, 3, 3, 2);
 //		adjM.addEdge(3, 4, 2, 3);
@@ -260,14 +260,14 @@ public class AdjacencyMatrixUndirected<V, K extends Comparable<K>> extends Adjac
 //		}
 
 		// Prueba para Dijsktra
-//		HashMap<Integer, Integer> n = adjM.dijsktra(1);
-//		for (Integer k : n.keySet()) {
-//			System.out.print(k + "," + n.get(k) + " | ");
-//		}
-//		System.out.println();
-//		for (int j = 0; j < adjM.path.size(); j++) {
-//			System.out.print(adjM.path.get(j) + " | ");
-//		}
+		HashMap<Integer, Integer> n = adjM.dijsktra(1);
+		for (Integer k : n.keySet()) {
+			System.out.print(k + "," + n.get(k) + " | ");
+		}
+		System.out.println();
+		for (int j = 0; j < adjM.path.size(); j++) {
+			System.out.print(adjM.path.get(j) + " | ");
+		}
 		
 //		
 
@@ -286,15 +286,15 @@ public class AdjacencyMatrixUndirected<V, K extends Comparable<K>> extends Adjac
 //		}
 
 		// Prueba para prim
-		HashMap<Integer, Integer> hash = adjM.prim();
-		for (Integer k : hash.keySet()) {	
-			System.out.print(k + "," + hash.get(k)+ " | ");;
-		}
-		System.out.println(" ");
-		System.out.println(adjM.weightPath);
-		for (int j = 0; j < adjM.path.size(); j++) {
-		System.out.print(adjM.path.get(j) + " | ");
-	}
+//		HashMap<Integer, Integer> hash = adjM.prim();
+//		for (Integer k : hash.keySet()) {	
+//			System.out.print(k + "," + hash.get(k)+ " | ");;
+//		}
+//		System.out.println(" ");
+//		System.out.println(adjM.weightPath);
+//		for (int j = 0; j < adjM.path.size(); j++) {
+//		System.out.print(adjM.path.get(j) + " | ");
+//	}
 
 //		Prueba Kruskal
 //		HashMap<Integer, Integer> answer = adjM.kruscal();

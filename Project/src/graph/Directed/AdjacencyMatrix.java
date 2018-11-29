@@ -12,6 +12,7 @@ import javax.swing.JEditorPane;
 
 import Interface.iGraphMatrix;
 
+
 public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> implements iGraphMatrix<V, K> {
 
 	protected EdgeSrcEnd<K>[][] matrix;
@@ -40,6 +41,8 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 	
 	protected double weightPath;
 	
+	protected HashMap<K, Integer> pathEdges;
+	
 
 	public AdjacencyMatrix() {
 		super();
@@ -51,55 +54,71 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 		weightPath = 0;
 	}
 	
-	
+
+	public EdgeSrcEnd<K>[][] getMatrix() {
+		return matrix;
+	}
 
 	public HashMap<K, Integer> getIndexNodes() {
 		return indexNodes;
 	}
 
+
 	public HashMap<Integer, K> getKeysNodes() {
 		return keysNodes;
 	}
 
-	public EdgeSrcEnd[][] getMatrix() {
-		return matrix;
+	public boolean[] getVisited() {
+		return visited;
 	}
 
-	public void setMatrix(EdgeSrcEnd[][] matrix) {
-		this.matrix = matrix;
-	}
-	
 	public ArrayList<K> getPath() {
 		return path;
 	}
 
-	public void setPath(ArrayList<K> path) {
-		this.path = path;
-	}
-	
-	
 	public HashMap<K, K> getFathers() {
 		return fathers;
 	}
-	
 
-	public double getWeightPath() {
-		return weightPath;
+
+	public Stack<K> getStack() {
+		return stack;
 	}
 
+	public Queue<K> getQueue() {
+		return queue;
+	}
 
+	public double[] getDistance() {
+		return distance;
+	}
+
+	public PriorityQueue<EdgeSrcEnd<K>> getPq() {
+		return pq;
+	}
+
+	public UnionStructure<V, K> getUnion() {
+		return union;
+	}
 
 	public EdgeSrcEnd[][] getAux() {
 		return aux;
 	}
 
+	public double getWeightPath() {
+		return weightPath;
+	}
+	
 
+	public HashMap<K, Integer> getPathEdges() {
+		return pathEdges;
+	}
 
 	private void initializeMatrix() {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix.length; j++) {
 				if (matrix[i][j] == null) {
-					matrix[i][j] = new EdgeSrcEnd<K>(null, null, null, Double.MAX_VALUE);
+					matrix[i][j] = new EdgeSrcEnd<K>(null, null, null,Double.MAX_VALUE);
 				}
 			}
 		}
@@ -186,8 +205,7 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 		int i = indexNodes.get(keyNodeStart);
 		int j = indexNodes.get(keyNodeEnd);
 
-		EdgeSrcEnd e = new EdgeSrcEnd<K>(super.getNodes().get(keyNodeStart), super.getNodes().get(keyNodeEnd), keyEdge,
-				weight);
+		EdgeSrcEnd e = new EdgeSrcEnd<K>(super.getNodes().get(keyNodeStart), super.getNodes().get(keyNodeEnd), keyEdge,weight);
 		matrix[i][j] = e;
 
 		super.getGeneralEdges().put(keyEdge, e);
@@ -206,6 +224,7 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 	public HashMap<K, K> dfs(K keyNode) {
 
 		path.clear();
+		pathEdges = new HashMap<>();
 		visited = new boolean[matrix.length];
 		fathers = new HashMap<K, K>(matrix.length);
 		stack = new Stack<K>();

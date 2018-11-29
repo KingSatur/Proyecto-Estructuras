@@ -2,6 +2,7 @@ package graphicInterface;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,7 +16,7 @@ import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Font;
+import threads.*;
 
 public class Main extends JFrame implements ActionListener {
 
@@ -29,10 +30,15 @@ public class Main extends JFrame implements ActionListener {
 	private JButton btnSimpleDirected;
 	private JButton btnSimpleUndirected;
 	private JButton btnPseudoGraph;
-	private Graphs graphs;
-
+	private Graphs modelGraphs;
+	private boolean simplreDirected;
+	private boolean simpleUndirected;
+	private boolean MultiGraph;
+	private boolean Pseudo;
+	
+	
 	public Main() {
-		graphs = new Graphs();
+		modelGraphs = new Graphs();
 		lblGraph = new JLabel("Graph");
 		lblGraph.setForeground(Color.RED);
 		lblGraph.setFont(new Font("Tw Cen MT", Font.PLAIN, 45));
@@ -89,38 +95,373 @@ public class Main extends JFrame implements ActionListener {
 		btnSimpleUndirected.addActionListener(this);
 		btnMultiGraphUndirected.addActionListener(this);
 		btnPseudoGraph.addActionListener(this);
-		
+
 	}
 
-	public static void main(String[] args) {
-		Main main = new Main();
-		main.setVisible(true);
+	public Graphs getGraphs() {
+		return modelGraphs;
+	}
+	
+	public DialogSimpleDirected getdSimpleDirected() {
+		return dSimpleDirected;
+	}
+
+	public void setdSimpleDirected(DialogSimpleDirected dSimpleDirected) {
+		this.dSimpleDirected = dSimpleDirected;
+	}
+
+	public DialogSimpleUndirected getdSimpleUndirected() {
+		return dSimpleUndirected;
+	}
+
+	public void setdSimpleUndirected(DialogSimpleUndirected dSimpleUndirected) {
+		this.dSimpleUndirected = dSimpleUndirected;
+	}
+
+	public DialogMultiGraphUndirected getdMultiUndirected() {
+		return dMultiUndirected;
+	}
+
+	public void setdMultiUndirected(DialogMultiGraphUndirected dMultiUndirected) {
+		this.dMultiUndirected = dMultiUndirected;
+	}
+
+	public DialogPseudo getdPseudo() {
+		return dPseudo;
+	}
+
+	public void setdPseudo(DialogPseudo dPseudo) {
+		this.dPseudo = dPseudo;
+	}
+	
+	public JLabel getLblGraph() {
+		return lblGraph;
+	}
+
+	public void setLblGraph(JLabel lblGraph) {
+		this.lblGraph = lblGraph;
+	}
+
+	public JButton getBtnMultiGraphUndirected() {
+		return btnMultiGraphUndirected;
+	}
+
+	public void setBtnMultiGraphUndirected(JButton btnMultiGraphUndirected) {
+		this.btnMultiGraphUndirected = btnMultiGraphUndirected;
+	}
+
+	public JButton getBtnSimpleDirected() {
+		return btnSimpleDirected;
+	}
+
+	public void setBtnSimpleDirected(JButton btnSimpleDirected) {
+		this.btnSimpleDirected = btnSimpleDirected;
+	}
+
+	public JButton getBtnSimpleUndirected() {
+		return btnSimpleUndirected;
+	}
+
+	public void setBtnSimpleUndirected(JButton btnSimpleUndirected) {
+		this.btnSimpleUndirected = btnSimpleUndirected;
+	}
+
+	public JButton getBtnPseudoGraph() {
+		return btnPseudoGraph;
+	}
+
+	public void setBtnPseudoGraph(JButton btnPseudoGraph) {
+		this.btnPseudoGraph = btnPseudoGraph;
+	}
+
+	public boolean isSimplreDirected() {
+		return simplreDirected;
+	}
+
+	public void setSimplreDirected(boolean simplreDirected) {
+		this.simplreDirected = simplreDirected;
+	}
+
+	public boolean isSimpleUndirected() {
+		return simpleUndirected;
+	}
+
+	public void setSimpleUndirected(boolean simpleUndirected) {
+		this.simpleUndirected = simpleUndirected;
+	}
+
+	public boolean isMultiGraph() {
+		return MultiGraph;
+	}
+
+	public void setMultiGraph(boolean multiGraph) {
+		MultiGraph = multiGraph;
+	}
+
+	public boolean isPseudo() {
+		return Pseudo;
+	}
+
+	public void setPseudo(boolean pseudo) {
+		Pseudo = pseudo;
+	}
+
+	public void setModelGraphs(Graphs modelGraphs) {
+		this.modelGraphs = modelGraphs;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource().equals(btnSimpleDirected)) {
-			dSimpleDirected = new DialogSimpleDirected();
+			modelGraphs.createSimpleGraph();
+			dSimpleDirected = new DialogSimpleDirected(this, modelGraphs.getSimpleDirectedGraph().getNodes(),
+			modelGraphs.getSimpleDirectedGraph().getMatrix());
 			dSimpleDirected.setVisible(true);
 			dSimpleDirected.setLocationRelativeTo(this);
+			simplreDirected = true;
+			simpleUndirected = false;
+			MultiGraph = false;
+			Pseudo = false;
 		}
-		
 		if (e.getSource().equals(btnSimpleUndirected)) {
-			
+			modelGraphs.createSimpleUndirectedGraph();
+			dSimpleUndirected = new DialogSimpleUndirected(this, modelGraphs.getSimpleUndirectedGraph().getNodes(),
+			modelGraphs.getSimpleUndirectedGraph().getMatrix());
+			dSimpleUndirected.setVisible(true);
+			dSimpleUndirected.setLocationRelativeTo(null);
+			simplreDirected = false;
+			simpleUndirected = true;
+			MultiGraph = false;
+			Pseudo = false;
 		}
-		
 		if (e.getSource().equals(btnMultiGraphUndirected)) {
 			dMultiUndirected = new DialogMultiGraphUndirected(this);
 			dMultiUndirected.setVisible(true);
-		
 		}
-		
 		if (e.getSource().equals(btnPseudoGraph)) {
 			dPseudo = new DialogPseudo(this);
 			dPseudo.setVisible(true);
 		}
 
+	}
+
+	public void bfs(Integer k) {
+
+		if (simplreDirected) {
+			modelGraphs.getSimpleDirectedGraph().bfs(k);
+			paint paint = new paint(dSimpleDirected.getPanelSimpleDirected().getPanelCanvas(),
+					modelGraphs.getSimpleDirectedGraph().getPath(), modelGraphs.getSimpleDirectedGraph().getNodes(),
+					modelGraphs.getSimpleDirectedGraph().getFathers());
+			paint.start();
+		}
+		if(simpleUndirected) {
+			modelGraphs.getSimpleUndirectedGraph().bfs(k);
+			paint paint2 = new paint(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(),
+					modelGraphs.getSimpleUndirectedGraph().getPath(), modelGraphs.getSimpleUndirectedGraph().getNodes(),
+					modelGraphs.getSimpleUndirectedGraph().getFathers());
+			paint2.start();
+			
+		}
+		if(MultiGraph) {
+//			modelGraphs.getUndirectedMultigraph().bfs(k);
+//			paint paint3 = new paint(dMultiUndirected.getPanelMultiUndirected().getPanelCanvas(),
+//					modelGraphs.getUndirectedMultigraph().getPath(), modelGraphs.getUndirectedMultigraph().getNodes(),
+//					modelGraphs.getUndirectedMultigraph()..getFathers());
+//			paint3.start();	
+		}
+		if(Pseudo) {
+//			modelGraphs.getUndirectedPseudoGraph().bfs(k);
+//			paint paint4 = new paint(dPseudo.getPanelPseudo().getPanelCanvas(),
+//			modelGraphs.getUndirectedPseudoGraph().getPath(), modelGraphs.getUndirectedPseudoGraph().getNodes(),
+//			modelGraphs.getUndirectedPseudoGraph().getFathers());
+//	paint4.start();
+			
+		}
+	
+
+	}
+
+	public void dfs(Integer k) {
+		if (simplreDirected) {
+			modelGraphs.getSimpleDirectedGraph().dfs(k);
+			paint paint = new paint(dSimpleDirected.getPanelSimpleDirected().getPanelCanvas(),
+					modelGraphs.getSimpleDirectedGraph().getPath(), modelGraphs.getSimpleDirectedGraph().getNodes(),
+					modelGraphs.getSimpleDirectedGraph().getFathers());
+			paint.start();
+		}
+		if(simpleUndirected) {
+			modelGraphs.getSimpleUndirectedGraph().dfs(k);
+			paint paint2 = new paint(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(),
+					modelGraphs.getSimpleUndirectedGraph().getPath(), modelGraphs.getSimpleUndirectedGraph().getNodes(),
+					modelGraphs.getSimpleUndirectedGraph().getFathers());
+			paint2.start();
+			
+		}
+//		if(MultiGraph) {
+////			modelGraphs.getUndirectedMultigraph().dfs(k);
+////			paint paint3 = new paint(dMultiUndirected.getPanelMultiUndirected().getPanelCanvas(),
+////					modelGraphs.getUndirectedMultigraph().getPath(), modelGraphs.getUndirectedMultigraph().getNodes(),
+////					modelGraphs.getUndirectedMultigraph()..getFathers());
+////			paint3.start();	
+//		}
+//		if(Pseudo) {
+////			modelGraphs.getUndirectedPseudoGraph().dfs(k);
+////			paint paint4 = new paint(dPseudo.getPanelPseudo().getPanelCanvas(),
+////			modelGraphs.getUndirectedPseudoGraph().getPath(), modelGraphs.getUndirectedPseudoGraph().getNodes(),
+////			modelGraphs.getUndirectedPseudoGraph().getFathers());
+////	paint4.start();
+			
+
+	}
+
+	public void dijkstra(Integer k) {
+		
+		if (simplreDirected) {
+			modelGraphs.getSimpleDirectedGraph().dijsktra(k);
+			paint paint = new paint(dSimpleDirected.getPanelSimpleDirected().getPanelCanvas(),
+					modelGraphs.getSimpleDirectedGraph().getPath(), modelGraphs.getSimpleDirectedGraph().getNodes(),
+					modelGraphs.getSimpleDirectedGraph().getFathers());
+			paint.start();
+		}
+			
+
+		if(simpleUndirected) {
+			modelGraphs.getSimpleUndirectedGraph().dijsktra(k);
+			paint paint2 = new paint(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(),
+					modelGraphs.getSimpleUndirectedGraph().getPath(), modelGraphs.getSimpleUndirectedGraph().getNodes(),
+					modelGraphs.getSimpleUndirectedGraph().getFathers());
+			paint2.start();
+			
+		}
+			
+
+		if(MultiGraph) {
+//			modelGraphs.getUndirectedMultigraph().dijsktra(k);
+//			paint paint3 = new paint(dMultiUndirected.getPanelMultiUndirected().getPanelCanvas(),
+//					modelGraphs.getUndirectedMultigraph().getPath(), modelGraphs.getUndirectedMultigraph().getNodes(),
+//					modelGraphs.getUndirectedMultigraph()..getFathers());
+//			paint3.start();	
+		}
+
+
+		if(Pseudo) {
+//			modelGraphs.getUndirectedPseudoGraph().dijsktra(k);
+//			paint paint4 = new paint(dPseudo.getPanelPseudo().getPanelCanvas(),
+//			modelGraphs.getUndirectedPseudoGraph().getPath(), modelGraphs.getUndirectedPseudoGraph().getNodes(),
+//			modelGraphs.getUndirectedPseudoGraph().getFathers());
+//	paint4.start();
+			
+		}
+			
+
+		
+
+	}
+
+	public void floydWarshall() {
+		if (simplreDirected) {
+			modelGraphs.getSimpleDirectedGraph().floydWarshall();
+			paint paint = new paint(dSimpleDirected.getPanelSimpleDirected().getPanelCanvas(),
+					modelGraphs.getSimpleDirectedGraph().getPath(), modelGraphs.getSimpleDirectedGraph().getNodes(),
+					modelGraphs.getSimpleDirectedGraph().getFathers());
+			paint.start();
+		}
+			
+
+		if(simpleUndirected) {
+			modelGraphs.getSimpleUndirectedGraph().floydWarshall();
+			paint paint2 = new paint(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(),
+					modelGraphs.getSimpleUndirectedGraph().getPath(), modelGraphs.getSimpleUndirectedGraph().getNodes(),
+					modelGraphs.getSimpleUndirectedGraph().getFathers());
+			paint2.start();
+			
+		}
+			
+	}
+	
+	public void kruskal() {
+		if (simplreDirected) {
+			modelGraphs.getSimpleDirectedGraph().kruscal();
+			paint paint = new paint(dSimpleDirected.getPanelSimpleDirected().getPanelCanvas(),
+					modelGraphs.getSimpleDirectedGraph().getPath(), modelGraphs.getSimpleDirectedGraph().getNodes(),
+					modelGraphs.getSimpleDirectedGraph().getFathers());
+			paint.start();
+		}
+			
+
+		if(simpleUndirected) {
+			modelGraphs.getSimpleUndirectedGraph().kruscal();
+			paint paint2 = new paint(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(),
+					modelGraphs.getSimpleUndirectedGraph().getPath(), modelGraphs.getSimpleUndirectedGraph().getNodes(),
+					modelGraphs.getSimpleUndirectedGraph().getFathers());
+			paint2.start();
+			
+		}
+			
+
+		if(MultiGraph) {
+//			modelGraphs.getUndirectedMultigraph().kruscal();
+//			paint paint3 = new paint(dMultiUndirected.getPanelMultiUndirected().getPanelCanvas(),
+//					modelGraphs.getUndirectedMultigraph().getPath(), modelGraphs.getUndirectedMultigraph().getNodes(),
+//					modelGraphs.getUndirectedMultigraph()..getFathers());
+//			paint3.start();	
+		}
+
+
+		if(Pseudo) {
+//			modelGraphs.getUndirectedPseudoGraph().kruscal();
+//			paint paint4 = new paint(dPseudo.getPanelPseudo().getPanelCanvas(),
+//			modelGraphs.getUndirectedPseudoGraph().getPath(), modelGraphs.getUndirectedPseudoGraph().getNodes(),
+//			modelGraphs.getUndirectedPseudoGraph().getFathers());
+//	paint4.start();
+			
+		}
+	}
+
+	public void prim() {
+		if (simplreDirected) {
+			modelGraphs.getSimpleDirectedGraph().prim();
+			paint paint = new paint(dSimpleDirected.getPanelSimpleDirected().getPanelCanvas(),
+					modelGraphs.getSimpleDirectedGraph().getPath(), modelGraphs.getSimpleDirectedGraph().getNodes(),
+					modelGraphs.getSimpleDirectedGraph().getFathers());
+			paint.start();
+		}
+			
+
+		if(simpleUndirected) {
+			modelGraphs.getSimpleUndirectedGraph().prim();
+			paint paint2 = new paint(dSimpleUndirected.getPanelSimpleUndirectedDirected().getPanelCanvas(),
+					modelGraphs.getSimpleUndirectedGraph().getPath(), modelGraphs.getSimpleUndirectedGraph().getNodes(),
+					modelGraphs.getSimpleUndirectedGraph().getFathers());
+			paint2.start();
+			
+		}
+			
+
+		if(MultiGraph) {
+//			modelGraphs.getUndirectedMultigraph().prim();
+//			paint paint3 = new paint(dMultiUndirected.getPanelMultiUndirected().getPanelCanvas(),
+//					modelGraphs.getUndirectedMultigraph().getPath(), modelGraphs.getUndirectedMultigraph().getNodes(),
+//					modelGraphs.getUndirectedMultigraph()..getFathers());
+//			paint3.start();	
+		}
+
+
+		if(Pseudo) {
+//			modelGraphs.getUndirectedPseudoGraph().prim();
+//			paint paint4 = new paint(dPseudo.getPanelPseudo().getPanelCanvas(),
+//			modelGraphs.getUndirectedPseudoGraph().getPath(), modelGraphs.getUndirectedPseudoGraph().getNodes(),
+//			modelGraphs.getUndirectedPseudoGraph().getFathers());
+//	paint4.start();
+			
+		}
+
+	}
+
+	public static void main(String[] args) {
+		Main main = new Main();
+		main.setVisible(true);
 	}
 
 }

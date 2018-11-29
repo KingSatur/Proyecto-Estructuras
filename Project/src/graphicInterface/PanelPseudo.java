@@ -17,7 +17,6 @@ public class PanelPseudo extends JPanel implements ActionListener {
 	private JPanel panelButton;
 	private JButton bfs; 
 	private JButton dfs;
-	private JButton dijkstra;
 	private JButton kruskal;
 	private JButton prime;
 	private JPanel panelContainer;
@@ -29,10 +28,8 @@ public class PanelPseudo extends JPanel implements ActionListener {
 	public PanelPseudo(Main main) {
 		
 		this.main = main;
-		panelGraph = new PanelGraph(main);
 		panelButton = new JPanel();
 		panelContainer = new JPanel();
-		panelStructure = new PanelStructures();
 		this.setBackground(Color.LIGHT_GRAY);
 		this.setLayout(new BorderLayout(0, 0));
 		this.add(panelButton, BorderLayout.NORTH);
@@ -52,12 +49,6 @@ public class PanelPseudo extends JPanel implements ActionListener {
 		dfs.addActionListener(this);
 		panelButton.add(dfs);
 		
-		dijkstra = new JButton("Dijkstra");
-		dijkstra.setFont(new Font("Tw Cen MT", Font.PLAIN, 11));
-		dijkstra.setBackground(Color.WHITE);
-		dijkstra.addActionListener(this);
-		panelButton.add(dijkstra);
-		
 		kruskal = new JButton("Kruskal");
 		kruskal.setFont(new Font("Tw Cen MT", Font.PLAIN, 11));
 		kruskal.setBackground(Color.WHITE);
@@ -71,11 +62,8 @@ public class PanelPseudo extends JPanel implements ActionListener {
 		panelButton.add(prime);
 		
 		add(panelContainer, BorderLayout.CENTER);
-		panelContainer.setLayout(null);
-		panelContainer.add(panelStructure);
-		panelStructure.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		panelContainer.add(panelGraph);
-		panelGraph.setLayout(null);
+		panelContainer.setLayout(new BorderLayout());
+		
 	}
 
 	@Override
@@ -86,9 +74,6 @@ public class PanelPseudo extends JPanel implements ActionListener {
 		}
 		else if(e.getSource().equals(dfs)) {
 
-		}
-		if(e.getSource().equals(dijkstra)) {
-			
 		}
 		if(e.getSource().equals(kruskal)) {
 			

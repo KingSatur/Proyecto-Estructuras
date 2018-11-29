@@ -2,56 +2,48 @@ package graphicInterface;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import graph.Directed.EdgeSrcEnd;
+import graph.Directed.Node;
+import model.Point;
 
 public class DialogSimpleUndirected extends JDialog {
 
+	public final static int ANCHO = 1000;
+	public final static int ALTO = 550;
+	
 	
 	private PanelSimpleUndirected panelSimpleUndirectedDirected;
-	private final JPanel contentPanel = new JPanel();
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			DialogSimpleUndirected dialog = new DialogSimpleUndirected();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	private Main main;
+	
+	public DialogSimpleUndirected(Main main, HashMap<Integer, Node<Point, Integer>> nodes, EdgeSrcEnd<Integer>[][] matrix) {
+		panelSimpleUndirectedDirected = new PanelSimpleUndirected(main, nodes, matrix);
+		this.main = main;
+		
+		setSize(ANCHO, ALTO);
+		setLayout(new BorderLayout());
+		JLabel lblNewLabel = new JLabel("Simple no Dirigido");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblNewLabel, BorderLayout.NORTH);
+		add(panelSimpleUndirectedDirected, BorderLayout.CENTER);
+		
+		setResizable(false);
 	}
 
-	/**
-	 * Create the dialog.
-	 */
-	public DialogSimpleUndirected() {
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setLayout(new FlowLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
-		}
+	public PanelSimpleUndirected getPanelSimpleUndirectedDirected() {
+		return panelSimpleUndirectedDirected;
 	}
+
+	
+	
+	
 
 }

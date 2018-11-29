@@ -1,6 +1,7 @@
 package model;
 
 import graph.Directed.AdjacencyMatrix;
+import graph.Directed.Node;
 import graph.Undirected.AdjacencyListUndirected;
 import graph.Undirected.AdjacencyMatrixUndirected;
 
@@ -11,12 +12,77 @@ public class Graphs {
 	private AdjacencyListUndirected<Point, Integer> undirectedMultigraph;
 	private AdjacencyListUndirected<Point, Integer> undirectedPseudoGraph;
 	
-	
-	
 	public Graphs() {
-		simpleDirectedGraph = new AdjacencyMatrix<Point, Integer>();
-		simpleUndirectedGraph = new AdjacencyMatrixUndirected<Point, Integer>();
+		createSimpleUndirectedGraph();
+		createSimpleGraph();
+		createMultiGraph();
+	}
+	
+	public void createMultiGraph() {
 		undirectedMultigraph = new AdjacencyListUndirected<Point, Integer>();
+		Point one = new Point(40, 30, 40);
+		Point two = new Point(40, 190, 40);
+		Point three = new Point(240, 95, 40);
+		Point four = new Point(450, 30, 40);
+		Point five = new Point(450, 190, 40);
+		Node<Point, Integer> nodeOne = new Node<Point, Integer>(one, 1);
+		Node<Point, Integer> nodeTwo = new Node<Point, Integer>(two, 2);
+		Node<Point, Integer> nodeThree = new Node<Point, Integer>(three, 3);
+		Node<Point, Integer> nodeFour = new Node<Point, Integer>(four, 4);
+		Node<Point, Integer> nodeFive = new Node<Point, Integer>(five, 5);
+		undirectedMultigraph.addNode(nodeOne);
+		undirectedMultigraph.addNode(nodeTwo);
+		undirectedMultigraph.addNode(nodeThree);
+		undirectedMultigraph.addNode(nodeFour);
+		undirectedMultigraph.addNode(nodeFive);
+		undirectedMultigraph.addEdge(1, 2, 20, 20);
+		undirectedMultigraph.addEdge(1, 2, 10, 7);
+		undirectedMultigraph.addEdge(1, 3, 9, 6);
+		undirectedMultigraph.addEdge(3, 2, 25, 4);
+		undirectedMultigraph.addEdge(1, 4, 17, 1);
+		undirectedMultigraph.addEdge(1, 4, 23, 8);
+		undirectedMultigraph.addEdge(2, 5, 79, 6);
+		undirectedMultigraph.addEdge(4, 5, 13, 3);
+		undirectedMultigraph.dfs(nodeOne);
+	}
+	
+	public void createSimpleUndirectedGraph() {
+		
+		simpleUndirectedGraph = new AdjacencyMatrixUndirected<Point, Integer>();
+		
+		Point p1 = new Point(160, 190, 15);
+		Point p2 = new Point(460, 190, 15);
+		Point p3 = new Point(310, 400, 15);
+		
+		simpleUndirectedGraph.addNode(new Node<Point, Integer>(p1, 1));
+		simpleUndirectedGraph.addNode(new Node<Point, Integer>(p2, 2));
+		simpleUndirectedGraph.addNode(new Node<Point, Integer>(p3, 3));
+		
+		simpleUndirectedGraph.addEdge(1, 2, 6, 1);
+		simpleUndirectedGraph.addEdge(1, 3, 2, 2);
+		simpleUndirectedGraph.addEdge(3, 2, 3, 3);
+		
+	}
+	
+	public void createSimpleGraph() {
+		simpleDirectedGraph = new AdjacencyMatrix<Point, Integer>();
+		
+		Point p1 = new Point(160, 190, 15);
+		Point p2 = new Point(460, 190, 15);
+	
+		
+		simpleDirectedGraph.addNode(new Node<Point, Integer>(p1, 1));
+		simpleDirectedGraph.addNode(new Node<Point, Integer>(p2, 2));
+		
+		simpleDirectedGraph.addEdge(1, 2, 7, 1);
+		
+	}
+	
+	public void createMultigraphUndirected() {
+		undirectedMultigraph = new AdjacencyListUndirected<Point, Integer>();
+	}
+	
+	public void createPseudoGraph() {
 		undirectedPseudoGraph = new AdjacencyListUndirected<Point, Integer>();		
 	}
 	
@@ -58,6 +124,16 @@ public class Graphs {
 
 	public void setUndirectedPseudoGraph(AdjacencyListUndirected<Point, Integer> undirectedPseudoGraph) {
 		this.undirectedPseudoGraph = undirectedPseudoGraph;
+	}
+	
+	public static void main(String[] args) {
+		
+		Graphs g = new Graphs();
+		int x = 100;
+		
+		int c = x +10;
+	
+		
 	}
 	
 }

@@ -1,7 +1,6 @@
 package tda;
 
 import dataStructures.NodeAbstract;
-import exceptions.StackEmptyException;
 
 public interface InterfaceCampiQueue<T> {
 

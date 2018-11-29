@@ -4,9 +4,11 @@ public class EdgeSrcEnd<K extends Comparable<K>> extends Edge<K> implements Comp
 
 	private Node src;
 	
+	
 	public EdgeSrcEnd(Node src, Node end, K key, double weightKey) {
 		super(end, key, weightKey);
 		this.src = src;
+		
 	}
 
 	public Node getSrc() {

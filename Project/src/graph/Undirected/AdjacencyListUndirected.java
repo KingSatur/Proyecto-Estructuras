@@ -1,6 +1,7 @@
 package graph.Undirected;
 
 import graph.Directed.AdjacencyList;
+import graph.Directed.EdgeSrcEnd;
 import graph.Directed.Node;
 
 public class AdjacencyListUndirected<V,K extends Comparable<K>> extends AdjacencyList<V,K>{
@@ -16,6 +17,8 @@ public class AdjacencyListUndirected<V,K extends Comparable<K>> extends Adjacenc
 			super.getNodes().get(keyDestiny).addEdge(super.getNodes().get(keySource), keyEdge, weight);
 			adj.put(keySource, super.getNodes().get(keySource).getNeighbors());
 			adj.put(keyDestiny, super.getNodes().get(keyDestiny).getNeighbors());
+			EdgeSrcEnd<K> edge = new EdgeSrcEnd<K>(super.getNodes().get(keySource), super.getNodes().get(keyDestiny), keyEdge, weight);
+			super.getGeneralEdges().put(edge.getKey(), edge);
 		}
 	}
 	
