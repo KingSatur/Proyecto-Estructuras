@@ -12,6 +12,7 @@ import java.util.Stack;
 import Interface.iGraphList;
 import dataStructures.Abstract;
 import graph.Undirected.AdjacencyListUndirected;
+import model.Point;
 import tda.InterfaceCampiQueue;
 import tda.InterfaceCampiStack;
 
@@ -247,6 +248,7 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 		nodesVisited.clear();
 		nodesQueue.clear();
 		edgesQueue.clear();
+		minimumRouteSume = 0;
 		
 		
 		Comparator<Edge> m = new EdgeCompare();
@@ -323,7 +325,7 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 		//ENCOLO LA COLA POR LAS ARISTAS DEL NODO SOURCE
 		fillQueue(edgesQueue, source, sourceUbication);
 		
-		while(fathers.size() != super.getNodes().size() - 1) {
+		while(fathers.size() != super.getNodes().size() - 1 && generalRoute.size() != super.getNodes().size()) {
 			Node<V,K> node = edgesQueue.peek().getEnd();
 			if(nodesVisited.get(node.getKey())) {
 				edgesQueue.poll();
@@ -397,12 +399,6 @@ public class AdjacencyList<V,K extends Comparable<K>> extends Graph<V,K>  implem
 	public void addNode(Node<V, K> newNode) {
 		super.getNodes().put(newNode.getKey(), newNode);
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 }

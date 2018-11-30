@@ -2,6 +2,7 @@ package UnitaryTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
@@ -45,18 +46,21 @@ class AdjacencyListTest {
 	void testBfs() {
 		
 		Node<String, Integer> n1 = generalScenary();
-		HashMap<Integer, Integer> fathersRoute = graph.bfs(n1);
-		HashMap<Integer, Integer> trueRoute = new HashMap<Integer, Integer>();
-		trueRoute.put(50, 20);
-		trueRoute.put(20, 10);
-		trueRoute.put(40, 50);
-		trueRoute.put(30, 40);	
+		ArrayList<Node<String,Integer>> generalRoute = graph.getGeneralRoute();
+		ArrayList<Integer> trueRoute = new ArrayList();
+		trueRoute.add(10);
+		trueRoute.add(20);
+		trueRoute.add(50);
+		trueRoute.add(40);
+		trueRoute.add(30);
 		
-		
-		for(Integer key: trueRoute.keySet()) {
-			assertTrue(fathersRoute.get(key).equals(trueRoute.get(key)));
+		for(int i = 0; i < generalRoute.size() ; i ++) {
+			Integer one = generalRoute.get(i).getKey();
+			Integer two = trueRoute.get(i);
+			assertTrue(one.equals(two));
 		}
-		
+
+			
 		
 	}
 	
@@ -65,16 +69,20 @@ class AdjacencyListTest {
 	void testDfs() {
 		
 		Node<String, Integer> n1 = generalScenary();
-		HashMap<Integer, Integer> fathersRoute = graph.dfs(n1);
-		HashMap<Integer, Integer> trueRoute = new HashMap<Integer, Integer>();
-		trueRoute.put(50, 10);
-		trueRoute.put(20, 30);
-		trueRoute.put(40, 20);
-		trueRoute.put(30, 50);		
-	
-		for(Integer key: trueRoute.keySet()) {
-			assertTrue(fathersRoute.get(key).equals(trueRoute.get(key)));
+		ArrayList<Node<String,Integer>> generalRoute = graph.getGeneralRoute();
+		ArrayList<Integer> trueRoute = new ArrayList();
+		trueRoute.add(10);
+		trueRoute.add(50);
+		trueRoute.add(30);
+		trueRoute.add(20);
+		trueRoute.add(40);
+		
+		for(int i = 0; i < generalRoute.size() ; i ++) {
+			Integer one = generalRoute.get(i).getKey();
+			Integer two = trueRoute.get(i);
+			assertTrue(one.equals(two));
 		}
+
 		
 		
 	}

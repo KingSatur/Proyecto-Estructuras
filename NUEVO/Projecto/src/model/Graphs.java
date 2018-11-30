@@ -197,6 +197,4 @@ public class Graphs {
 		this.undirectedPseudoGraph = undirectedPseudoGraph;
 	}
 	
-	
-	
 }

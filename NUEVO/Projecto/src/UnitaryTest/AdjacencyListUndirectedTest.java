@@ -46,16 +46,18 @@ class AdjacencyListUndirectedTest {
 	void testBfs() {
 		
 		Node<String, Integer> n1 = generalScenary();
-		HashMap<Integer, Integer> fathersRoute = graph.bfs(n1);
-		HashMap<Integer, Integer> trueRoute = new HashMap<Integer, Integer>();
-		trueRoute.put(60, 10);
-		trueRoute.put(100, 60);
-		trueRoute.put(67, 100);
-		trueRoute.put(7, 67);
+		ArrayList<Node<String,Integer>> generalRoute = graph.getGeneralRoute();
+		ArrayList<Integer> trueRoute = new ArrayList();
+		trueRoute.add(10);
+		trueRoute.add(7);
+		trueRoute.add(67);
+		trueRoute.add(100);
+		trueRoute.add(60);
 		
-
-		for(Integer key: trueRoute.keySet()) {
-			assertTrue(fathersRoute.get(key).equals(trueRoute.get(key)));
+		for(int i = 0; i < generalRoute.size() ; i ++) {
+			Integer one = generalRoute.get(i).getKey();
+			Integer two = trueRoute.get(i);
+			assertTrue(one.equals(two));
 		}
 		
 	}
@@ -64,15 +66,18 @@ class AdjacencyListUndirectedTest {
 	void testDfs() {
 		
 		Node<String, Integer> n1 = generalScenary();
-		HashMap<Integer, Integer> fathersRoute = graph.dfs(n1);
-		HashMap<Integer, Integer> trueRoute = new HashMap<Integer, Integer>();
-		trueRoute.put(60, 100);
-		trueRoute.put(100, 67);
-		trueRoute.put(67, 7);
-		trueRoute.put(7, 10);
-			
-		for(Integer key: trueRoute.keySet()) {
-			assertTrue(fathersRoute.get(key).equals(trueRoute.get(key)));
+		ArrayList<Node<String,Integer>> generalRoute = graph.getGeneralRoute();
+		ArrayList<Integer> trueRoute = new ArrayList();
+		trueRoute.add(10);
+		trueRoute.add(40);
+		trueRoute.add(50);
+		trueRoute.add(30);
+		trueRoute.add(20);
+		
+		for(int i = 0; i < generalRoute.size() ; i ++) {
+			Integer one = generalRoute.get(i).getKey();
+			Integer two = trueRoute.get(i);
+			assertTrue(one.equals(two));
 		}
 	
 	}
