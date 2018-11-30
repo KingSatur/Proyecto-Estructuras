@@ -286,6 +286,7 @@ class AdjacencyMatrixTest {
 		setup2();
 		graphMatrix.dfs(1);
 		
+		
 		HashMap<Integer, Integer> trueAnswer = new HashMap<Integer, Integer>();
 		trueAnswer.put(1, 1);
 		trueAnswer.put(2, 3);
@@ -317,9 +318,9 @@ class AdjacencyMatrixTest {
 		HashMap<Integer, Integer> trueAnswer = new HashMap<Integer, Integer>();
 		trueAnswer.put(1, 1);
 		trueAnswer.put(2, 1);
-		trueAnswer.put(3, 4);
-		trueAnswer.put(4, 5);
-		trueAnswer.put(5, 2);
+		trueAnswer.put(3, 5);
+		trueAnswer.put(4, 2);
+		trueAnswer.put(5, 1);
 		
 		ArrayList<Integer> path = new ArrayList<>();
 		path.add(1);

@@ -456,5 +456,40 @@ public class AdjacencyMatrix<V, K extends Comparable<K>> extends Graph<V, K> imp
 	}
 
 
+	public static void main(String[] args) {
+		AdjacencyMatrix graphMatrix = new AdjacencyMatrix<Integer, Integer>();
+		Node<Integer,Integer> n1 = new Node<Integer,Integer>(1,1);
+		Node<Integer,Integer> n2 = new Node<Integer,Integer>(2,2);
+		Node<Integer,Integer> n3 = new Node<Integer,Integer>(3,3);
+		Node<Integer,Integer> n4 = new Node<Integer,Integer>(4,4);
+		Node<Integer,Integer> n5 = new Node<Integer, Integer>(5,5);
+		graphMatrix.addNode(n1);
+		graphMatrix.addNode(n2);
+		graphMatrix.addNode(n3);
+		graphMatrix.addNode(n4);
+		graphMatrix.addNode(n5);
+		
+		graphMatrix.addEdge(1, 2, 1, 1);
+		graphMatrix.addEdge(1, 5, 2, 21);
+		graphMatrix.addEdge(2, 5, 3, 80);
+		graphMatrix.addEdge(2, 4, 5, 5);
+		graphMatrix.addEdge(3, 2, 7, 40);
+		graphMatrix.addEdge(3, 1, 37, 60);
+		graphMatrix.addEdge(4, 1, 2, 30);
+		graphMatrix.addEdge(4, 3, 19, 70);
+		graphMatrix.addEdge(5, 4, 13, 4);
+		graphMatrix.addEdge(5, 3, 6, 3);	
+		
+		
+		
+		HashMap<Integer, Integer> n = graphMatrix.bfs(1);
+		for (Integer k : n.keySet()) {
+			System.out.print(k + "," + n.get(k)+ " | ");
+		}
+		System.out.println();
+		for (int j = 0; j < graphMatrix.path.size(); j++) {
+			System.out.print(graphMatrix.path.get(j) + " | ");
+		}
+	}
 
 }
